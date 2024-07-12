@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SSR.OverWeight;
 using UnityEngine;
 
 public class ElevatorController : MonoBehaviour
@@ -19,19 +20,12 @@ public class ElevatorController : MonoBehaviour
     {
         IDLE,
         MOVING,
-        EXIST_ING,
-        ENTER_ING,
-    }
-
-    void Start()
-    {
+        OFFBOARDING,
+        ONBOARDING,
     }
 
     void Update()
     {
-        // if (Input.GetKey(1))
-        // {
-        // }
         switch (_elevatorState)
         {
             case ElevatorState.IDLE:
@@ -54,9 +48,9 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateMoving()
     {
-        Direction direction = _targetFloor.transform.position.y > _currentFloor.transform.position.y
-            ? Direction.Up
-            : Direction.Down;
+        ElevatorDirection direction = _targetFloor.transform.position.y > _currentFloor.transform.position.y
+            ? ElevatorDirection.Up
+            : ElevatorDirection.Down;
         float currentPosition = transform.position.y;
         float startPosition = _currentFloor.transform.position.y;
         float targetPosition = _targetFloor.transform.position.y;
@@ -64,8 +58,8 @@ public class ElevatorController : MonoBehaviour
         float updatedPosition = currentPosition + diff;
 
         // 넘어가는거 보정
-        if ((direction == Direction.Up && updatedPosition >= targetPosition) ||
-            (direction == Direction.Down && updatedPosition <= targetPosition))
+        if ((direction == ElevatorDirection.Up && updatedPosition >= targetPosition) ||
+            (direction == ElevatorDirection.Down && updatedPosition <= targetPosition))
         {
             Debug.Log("보정");
             updatedPosition = targetPosition;
@@ -95,7 +89,7 @@ public class ElevatorController : MonoBehaviour
         if (Math.Abs(currentPosition - targetPosition) < 0.01f)
         {
             updatedPosition = targetPosition;
-            _elevatorState = ElevatorState.EXIST_ING;
+            _elevatorState = ElevatorState.OFFBOARDING;
             _currentFloor = _targetFloor;
         }
 
@@ -104,14 +98,16 @@ public class ElevatorController : MonoBehaviour
 
     public bool Enter(Passenger passenger)
     {
-        if (!CanEnter()) return false;
+        if (!CanEnter(passenger)) return false;
         _passengers.Add(passenger);
+        ElevatorPassengerEnteredEvent.Trigger(passenger);
         return true;
     }
 
     private void Exit(Passenger passenger)
     {
         _passengers.Remove(passenger);
+        ElevatorPassengerExitEvent.Trigger(passenger);
     }
 
     private List<Passenger> GetExitWantPassengers(Floor floor)
@@ -128,30 +124,20 @@ public class ElevatorController : MonoBehaviour
         return exitWantPassengers;
     }
 
-    public bool CanEnter()
+    public bool CanEnter(Passenger passenger)
     {
-        return _passengers.Count < _maxWeight; // todo   weight계산 바꿔야함
+        int remainWeight = _maxWeight - GetCurrentWeight();
+        return remainWeight > passenger.Weight;
     }
-}
 
-public enum Direction
-{
-    Up = 1,
-    Down = -1
-}
-
-public static class DirectionExtensions
-{
-    public static float ToFloat(this Direction direction)
+    public int GetCurrentWeight()
     {
-        switch (direction)
+        int totalWeight = 0;
+        foreach (var passenger in _passengers)
         {
-            case Direction.Up:
-                return 1f;
-            case Direction.Down:
-                return -1f;
-            default:
-                return 0f;
+            totalWeight += passenger.Weight;
         }
+
+        return totalWeight;
     }
 }
