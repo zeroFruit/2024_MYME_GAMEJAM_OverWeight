@@ -17,6 +17,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     public Passenger Spawn(Floor floor)
     {
         Passenger spawned = Instantiate(passengerPrefab);
+        spawned.Init();
         _passengers.Add(spawned);
         return spawned;
     }

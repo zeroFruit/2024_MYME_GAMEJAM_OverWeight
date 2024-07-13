@@ -6,28 +6,51 @@ using Random = UnityEngine.Random;
 
 public class Floor : MonoBehaviour
 {
-    public int FloorIdx { get; set; }
+    public int FloorIdx;
     public int capacityOfPassengers;
+    public int maxCapacityOfPassengers;
     public int spawnProbability;
     public List<Slot> Slots;
     public List<Passenger> Passengers;
     
-    public void Init()
+    public void Init(Slot slotPrefab, int floorIdx)
     {
-        FloorIdx = 0;
-        capacityOfPassengers = 10;
+        FloorIdx = floorIdx;
+        capacityOfPassengers = 7;
+        maxCapacityOfPassengers = 10;
         spawnProbability = 100;
         Slots = new List<Slot>();
+        for (int idx = 0; idx < capacityOfPassengers; idx++)
+        {
+            Slot slot = Instantiate(slotPrefab, transform);
+            slot.Init(floorIdx, idx);
+            Slots.Add(slot);
+        }
         Passengers = new List<Passenger>();
     }
-    
+
+    public void Start()
+    {
+        FloorUiData uiData = FloorUiData.GetFloorUiData(FloorIdx);
+        transform.localPosition = new Vector3(uiData.localPosX, uiData.localPosY, 0);
+        transform.localScale = new Vector3(uiData.scaleX, uiData.scaleY, 1);
+    }
+
     public void SpawnPassenger()
     {
-        if (isSpawnedRandomly())
+        if (Passengers.Count >= capacityOfPassengers)
         {
-            Passenger newPassenger = PassengerManager.Instance.Spawn(this);
-            newPassenger.transform.SetParent(getEmptySlot().transform);
-            Passengers.Add(newPassenger);
+            Debug.Log("Floor Timer Start!!!");
+        }
+
+        if (Passengers.Count < maxCapacityOfPassengers)
+        {
+            if (isSpawnedRandomly())
+            {
+                Passenger newPassenger = PassengerManager.Instance.Spawn(this);
+                newPassenger.transform.SetParent(getEmptySlot().transform);
+                Passengers.Add(newPassenger);
+            }
         }
     }
 

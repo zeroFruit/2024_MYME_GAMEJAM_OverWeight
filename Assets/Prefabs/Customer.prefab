@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 0eac170cf630f49b2bb126de3a0a43c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -101,7 +101,5 @@ MonoBehaviour:
   TargetFloor: {fileID: 0}
   Weight: 0
   isReadyToRide: 0
-  prefab: {fileID: 8040231624767282015}
-  instance: {fileID: 0}
   maxX: 0
   movingSpeed: 0

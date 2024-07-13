@@ -16,6 +16,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     public float spawnSpeed;
     public float spawnTiming;
 
+    [Header("Prefab")]
     public Floor floorPrefab;
     public Slot slotPrefab;
 
@@ -23,19 +24,14 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         base.Awake();
         _floors = new List<Floor>();
-        day = 1;
+        day = 14;
         spawnTimer = 0;
         spawnSpeed = 3f;
         spawnTiming = 10;
         for (int idx = 0; idx < day; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
-            floor.Init();
-            for (int jdx = 0; jdx < floor.capacityOfPassengers; jdx++)
-            {
-                Slot slot = Instantiate(slotPrefab, floor.transform);
-                floor.Slots.Add(slot);
-            }
+            floor.Init(slotPrefab, idx);
             _floors.Add(floor.GetComponent<Floor>());
         }
     }

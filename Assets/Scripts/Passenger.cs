@@ -7,10 +7,7 @@ public class Passenger : MonoBehaviour
     public Floor TargetFloor;
     public int Weight; // 무게
     public bool isReadyToRide;
-
-    public GameObject prefab;
-    public GameObject instance;
-
+    
     public float maxX;
     public float movingSpeed;
     
@@ -20,9 +17,13 @@ public class Passenger : MonoBehaviour
         isReadyToRide = false;
         maxX = 0.3f;
         movingSpeed = 1;
-        instance = Instantiate(prefab, Vector3.zero, Quaternion.identity);
     }
-    
+
+    private void Start()
+    {
+        transform.localPosition = new Vector3(maxX * -1f, 0.45f, 0);
+    }
+
     private void Update()
     {
         Vector3 curPos = transform.localPosition;
