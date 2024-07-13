@@ -269,9 +269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 9
 --- !u!1 &341576690027143592
 GameObject:
@@ -2157,9 +2156,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 4734602588674739816}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 0
 --- !u!1 &1435183758958471723
 GameObject:
@@ -2538,9 +2536,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 12
 --- !u!1 &1706956754724727059
 GameObject:
@@ -3081,9 +3078,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 2
 --- !u!1 &2075740021222827218
 GameObject:
@@ -3220,9 +3216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 13
 --- !u!1 &2158826455496169967
 GameObject:
@@ -3600,9 +3595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 7
 --- !u!1 &2682898755330082898
 GameObject:
@@ -5390,9 +5384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 3
 --- !u!1 &4262053419649185929
 GameObject:
@@ -6173,9 +6166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 10
 --- !u!1 &4554939594482527870
 GameObject:
@@ -6835,9 +6827,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 11
 --- !u!1 &4869322042337700676
 GameObject:
@@ -8112,9 +8103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 6
 --- !u!1 &5963625897387267145
 GameObject:
@@ -8251,9 +8241,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 4
 --- !u!1 &5969603590350670964
 GameObject:
@@ -9768,9 +9757,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 5
 --- !u!1 &7301132421942165523
 GameObject:
@@ -10419,9 +10407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 1
 --- !u!1 &7762162682986142475
 GameObject:
@@ -11807,9 +11794,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
-  buttonImage: {fileID: 0}
-  stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 8
 --- !u!1 &8550292237394066769
 GameObject:
