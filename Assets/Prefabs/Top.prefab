@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: 4619836526040307310}
   - component: {fileID: 964248150430166383}
   - component: {fileID: 2786122619432819679}
-  - component: {fileID: 2185426125955057935}
+  - component: {fileID: 1841302483914392439}
   m_Layer: 5
   m_Name: HudDayProgress
   m_TagString: Untagged
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2185426125955057935
+--- !u!114 &1841302483914392439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -657,12 +657,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3015577081959335042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d59cbf355c6c4ca0ac5313a790a4013, type: 3}
+  m_Script: {fileID: 11500000, guid: a5f7d85f11e14188b0f8bd3518521df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: -0.37
-  debug: 1
-  progressBar: {fileID: 2309701961060990938}
 --- !u!1 &3226562479605872253
 GameObject:
   m_ObjectHideFlags: 0
