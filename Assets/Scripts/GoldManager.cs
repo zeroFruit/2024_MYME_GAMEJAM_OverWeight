@@ -11,6 +11,7 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
 
     public float GoldPerSpeed = 1;
     public GameObject IncomeTextPrefab;
+    public GameObject OutcomeTextPrefab;
 
     public void OnEvent(ElevatorSettleUpEvent e)
     {
@@ -38,6 +39,14 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
             plusObj.transform.position =
                 new Vector3(e.Elevator.transform.position.x, e.Elevator.transform.position.y + 0.2f, -9);
             plusObj.GetComponent<IncomeScript>().Message = "+" + plustAffectedGold;
+        }
+
+        if (minusAffectedGold > 0)
+        {
+            GameObject minusObj = Instantiate(OutcomeTextPrefab);
+            minusObj.transform.position =
+                new Vector3(e.Elevator.transform.position.x, e.Elevator.transform.position.y + 0.4f, -9);
+            minusObj.GetComponent<IncomeScript>().Message = "-" + minusAffectedGold;
         }
 
         GoldChangedEvent.Trigger(
