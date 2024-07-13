@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Floor : MonoBehaviour
 {
+    [Header("FloorInfo")] 
     public int FloorIdx;
+    public string FloorName;
 
-    [Header("FloorInfo")] public int capacityOfPassengers;
+    public int capacityOfPassengers;
     public int maxCapacityOfPassengers;
 
     [Header("InnerData")] public List<Slot> Slots;
@@ -22,9 +25,10 @@ public class Floor : MonoBehaviour
     public WaveType WaveType;
 
 
-    public void Init(Slot slotPrefab, int floorIdx, FloorTimer floorTimer)
+    public void Init(Slot slotPrefab, int floorIdx, string floorName, FloorTimer floorTimer)
     {
         FloorIdx = floorIdx;
+        FloorName = floorName;
         capacityOfPassengers = 7;
         maxCapacityOfPassengers = 10;
 
@@ -41,12 +45,33 @@ public class Floor : MonoBehaviour
         timer.Init();
         this.isActivated = false;
         WaveType = WaveType.None;
+
+        TextMeshPro textField = this.GetComponentInChildren<TextMeshPro>();
+        textField.transform.localPosition = new Vector3(-23f, 0.7f, 0);
+        textField.text = GetFloorName();
+        textField.fontSize = 8f;
+        textField.fontStyle = FontStyles.Bold;
+        textField.rectTransform.sizeDelta = new Vector2(14, 1);
     }
 
     public void Start()
     {
         FloorUiData uiData = FloorUiData.GetFloorUiData(FloorIdx);
         transform.localPosition = new Vector3(uiData.localPosX, uiData.localPosY, 0);
+    }
+
+    private void Update()
+    {
+        TextMeshPro textField = this.GetComponentInChildren<TextMeshPro>();
+        textField.text = GetFloorName();
+        Color color = isActivated ? new Color(0, 0, 0) : new Color(0.5f, 0.5f, 0.5f);
+        textField.color = color;
+        textField.outlineColor = color;
+    }
+
+    private string GetFloorName()
+    {
+        return $"{FloorIdx + 1}F {FloorName} [{Passengers.Count}/{maxCapacityOfPassengers}]";
     }
 
     public void Actiavte()
@@ -210,6 +235,7 @@ public class Floor : MonoBehaviour
 
     public void OnboardPassenger(Passenger passenger)
     {
+        passenger.transform.SetParent(null);
         Passengers.Remove(passenger);
         RearrangePassengers();
         if (Passengers.Count() < capacityOfPassengers)

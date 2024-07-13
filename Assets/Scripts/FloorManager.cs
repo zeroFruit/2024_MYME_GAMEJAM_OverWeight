@@ -48,7 +48,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         {
             Floor floor = Instantiate(floorPrefab);
             floor.name += $"{idx}";
-            floor.Init(slotPrefab, idx, FloorTimerPrefab);
+            floor.Init(slotPrefab, idx, "블록체인 연구소", FloorTimerPrefab);
             Floors.Add(floor.GetComponent<Floor>());
             if (floor.FloorIdx < initialFloorNum)
             {
@@ -91,6 +91,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         Floor floor = e.Passenger.StartFloor;
         floor.OnboardPassenger(e.Passenger);
+        PassengerManager.Instance.Passengers.Remove(e.Passenger);
+        e.Passenger.gameObject.SetActive(false);
     }
 
     public Floor GetRandomFloor(Floor without)

@@ -41,8 +41,8 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
 
     public void OnEvent(ElevatorPassengerEnteredEvent e)
     {
-        Passengers.Remove(e.Passenger);
-        e.Passenger.gameObject.SetActive(false);
+        // Passengers.Remove(e.Passenger);
+        // e.Passenger.gameObject.SetActive(false);
     }
 
     public void OnEvent(ElevatorPassengerExitEvent e)
