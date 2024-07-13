@@ -66,6 +66,7 @@ public class UIItem : UIBase
     {
         if (!HasEnoughGold())
         {
+            Debug.Log("222");
             this._upgradeButton.interactable = false;
             return;
         }
@@ -82,10 +83,13 @@ public class UIItem : UIBase
                 this._upgradeButton.interactable = UpgradeManager.Instance.CanUpgradeOptCostLevel(this._index);
                 break;
         }
+        
+        Debug.Log("333");
     }
 
     bool HasEnoughGold()
     {
+        Debug.Log($"HasEnoughGold(): {GoldManager.Instance.CurrentGold}");
         return GoldManager.Instance.CurrentGold >= this._cost;
     }
 

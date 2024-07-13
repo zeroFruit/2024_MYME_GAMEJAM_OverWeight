@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIPanelElevatorUpgrade : UIPanel,
-    EventListener<UpgradeEvent>
+    EventListener<UpgradeEvent>,
+    EventListener<GoldChangedEvent>
 {
     #region Binding
 
@@ -117,14 +118,22 @@ public class UIPanelElevatorUpgrade : UIPanel,
                 break;
         }
     }
+    
+    public void OnEvent(GoldChangedEvent e)
+    {
+        this.Refresh();   
+    }
 
     void OnEnable()
     {
-        this.StartListeningEvent();
+        this.StartListeningEvent<UpgradeEvent>();
+        this.StartListeningEvent<GoldChangedEvent>();
     }
 
     void OnDisable()
     {
-        this.StopListeningEvent();
+        this.StopListeningEvent<UpgradeEvent>();
+        this.StopListeningEvent<GoldChangedEvent>();
     }
+    
 }
