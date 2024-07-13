@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11bb17f9212f4dbfa62dfdd2a57287df, type: 3}
-  m_Name: PlusSpeed_LV2
+  m_Name: OptCost_LV0
   m_EditorClassIdentifier: 
-  Type: 2
-  Name: "\uC18D\uB3C4 \uC0C1\uD55C \uC99D\uAC00"
-  Description: "\uC5D8\uB808\uBCA0\uC774\uD130 \uC0C1\uD55C \uC18D\uB3C4\uB97C 2\uBC30
-    \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
-  Icon: {fileID: -8541071945468892348, guid: f20ca852625764cce94eb082519a3d1b, type: 3}
-  Cost: 1800
-  Level: 2
+  Type: 3
+  Name: "\uC6B4\uD589 \uBE44\uC6A9 \uCD5C\uC801\uD654"
+  Description: "\uC6B4\uD589 \uBE44\uC6A9 10%\uB97C \uC801\uAC8C\uB0C5\uB2C8\uB2E4."
+  Icon: {fileID: -2914809775870896201, guid: 4198ffa48437347ab95d1a2de763bf1f, type: 3}
+  Cost: 0
+  Level: 0
   EmptyWeight: 0
   MaxCapacity: 0
-  AdditionalMaxSpeed: 6
+  AdditionalMaxSpeed: 0
   AdditionalSaveCost: 0

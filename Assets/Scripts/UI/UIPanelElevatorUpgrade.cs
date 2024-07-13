@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
+using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPanelElevatorUpgrade : UIPanel
+public class UIPanelElevatorUpgrade : UIPanel,
+    EventListener<UpgradeEvent>
 {
     #region Binding
 
@@ -80,6 +83,12 @@ public class UIPanelElevatorUpgrade : UIPanel
         this.Hide();
     }
 
+    void Refresh()
+    {
+        DeactivateSections();
+        this.ActivateSections();
+    }
+
     #region Debugs
 
     [InspectorButton("TestShow")]
@@ -98,5 +107,24 @@ public class UIPanelElevatorUpgrade : UIPanel
     }
 
     #endregion
-    
+
+    public void OnEvent(UpgradeEvent e)
+    {
+        switch (e.EventType)
+        {
+            case UpgradeEventType.Updated:
+                this.Refresh();
+                break;
+        }
+    }
+
+    void OnEnable()
+    {
+        this.StartListeningEvent();
+    }
+
+    void OnDisable()
+    {
+        this.StopListeningEvent();
+    }
 }

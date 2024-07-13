@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: "\uACF5\uAC04 \uCD94\uAC00"
   Description: "\uC5D8\uB808\uBCA0\uC774\uD130 \uACF5\uAC04 1\uCE78\uC744 \uCD94\uAC00\uD569\uB2C8\uB2E4.
     \uBB34\uAC8C\uAC00 30kg \uCD94\uAC00\uB429\uB2C8\uB2E4."
-  Icon: {fileID: 0}
+  Icon: {fileID: 751928617836241278, guid: 7df4c63beb7ba42569d8b89683337092, type: 3}
   Cost: 800
   Level: 1
   EmptyWeight: 1.5

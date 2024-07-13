@@ -55,11 +55,13 @@ public class UpgradeManager : Singleton<UpgradeManager>
         ElevatorUpgrades[idx].CurrentSpaceLevel += 1;
         ElevatorManager.Instance.SetElevatorCapacity(idx,ElevatorUpgrades[idx].CurrentSpaceUpgrade.MaxCapacity);
         ElevatorManager.Instance.SetEmptyWeight(idx,ElevatorUpgrades[idx].CurrentSpaceUpgrade.EmptyWeight);
+        
+        UpgradeEvent.Trigger(UpgradeEventType.Updated);
     }
 
     public bool CanUpgradeSpace(int idx)
     {
-        return ElevatorUpgrades[idx].CurrentSpaceLevel < SpaceUpgrades.Count;
+        return ElevatorUpgrades[idx].CurrentSpaceLevel + 1 < SpaceUpgrades.Count;
     }
 
     public void UpgradeSpeed(int idx)
@@ -67,11 +69,13 @@ public class UpgradeManager : Singleton<UpgradeManager>
         if (!CanUpgradeSpeed(idx))
             return;
         ElevatorUpgrades[idx].CurrentSpeedLevel += 1;
+        
+        UpgradeEvent.Trigger(UpgradeEventType.Updated);
     }
 
     public bool CanUpgradeSpeed(int idx)
     {
-        return ElevatorUpgrades[idx].CurrentSpeedLevel < SpeedUpgrades.Count;
+        return ElevatorUpgrades[idx].CurrentSpeedLevel + 1 < SpeedUpgrades.Count;
     }
 
     public void UpgradeOptCostLevel(int idx)
@@ -79,30 +83,32 @@ public class UpgradeManager : Singleton<UpgradeManager>
         if (!CanUpgradeOptCostLevel(idx))
             return;
         ElevatorUpgrades[idx].CurrentOptCostLevel += 1;
+        
+        UpgradeEvent.Trigger(UpgradeEventType.Updated);
     }
 
     public bool CanUpgradeOptCostLevel(int idx)
     {
-        return ElevatorUpgrades[idx].CurrentOptCostLevel < OptCostUpgrades.Count;
+        return ElevatorUpgrades[idx].CurrentOptCostLevel + 1 < OptCostUpgrades.Count;
     }
-    public List<UpgradeData> GetElevatorUpgrades(int idx)
+    public List<UpgradeData> GetElevatorNextUpgrades(int idx)
     {
         List<UpgradeData> result = new List<UpgradeData>();
         ElevatorUpgradeStatus elevatorUpgradeStatus = ElevatorUpgrades[idx];
 
-        if (elevatorUpgradeStatus.CurrentSpaceLevel < this.SpaceUpgrades.Count)
+        if (CanUpgradeSpace(idx))
         {
-            result.Add(this.SpaceUpgrades[elevatorUpgradeStatus.CurrentSpaceLevel]);
+            result.Add(this.SpaceUpgrades[elevatorUpgradeStatus.CurrentSpaceLevel + 1]);
         }
 
-        if (elevatorUpgradeStatus.CurrentSpeedLevel < this.SpeedUpgrades.Count)
+        if (CanUpgradeSpeed(idx))
         {
-            result.Add(this.SpeedUpgrades[elevatorUpgradeStatus.CurrentSpeedLevel]);
+            result.Add(this.SpeedUpgrades[elevatorUpgradeStatus.CurrentSpeedLevel + 1]);
         }
 
-        if (elevatorUpgradeStatus.CurrentOptCostLevel < this.OptCostUpgrades.Count)
+        if (CanUpgradeOptCostLevel(idx))
         {
-            result.Add(this.OptCostUpgrades[elevatorUpgradeStatus.CurrentOptCostLevel]);
+            result.Add(this.OptCostUpgrades[elevatorUpgradeStatus.CurrentOptCostLevel + 1]);
         }
 
         return result;

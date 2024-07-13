@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11bb17f9212f4dbfa62dfdd2a57287df, type: 3}
   m_Name: OptCost_LV1
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 3
   Name: "\uC6B4\uD589 \uBE44\uC6A9 \uCD5C\uC801\uD654"
   Description: "\uC6B4\uD589 \uBE44\uC6A9 10%\uB97C \uC801\uAC8C\uB0C5\uB2C8\uB2E4."
-  Icon: {fileID: 0}
+  Icon: {fileID: -2914809775870896201, guid: 4198ffa48437347ab95d1a2de763bf1f, type: 3}
   Cost: 1000
   Level: 1
-  AdditionalWeight: 0
-  AdditionalCapacity: 0
+  EmptyWeight: 0
+  MaxCapacity: 0
   AdditionalMaxSpeed: 0
   AdditionalSaveCost: 10

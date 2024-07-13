@@ -6,7 +6,7 @@ public enum UpgradeType
     Algorithm,
     Space,
     Speed,
-    
+    OptCost,
 }
 
 [CreateAssetMenu(menuName = "SSR/OverWeight/Upgrade", fileName = "Upgrade")]

@@ -129,7 +129,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                 this.ApplyWave(WaveType.None);
                 break;
             default:
-                Debug.Log("FloorManager: Unhandled Event Type! - " + e.EventType.ToString());
+                // Debug.Log("FloorManager: Unhandled Event Type! - " + e.EventType.ToString());
                 break;
         }
     }

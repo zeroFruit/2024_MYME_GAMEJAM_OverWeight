@@ -5,11 +5,6 @@ using Object = UnityEngine.Object;
 
 public abstract class UIBase : MonoBehaviour
     {
-        public virtual void Initialize()
-        {
-            
-        }
-        
         Dictionary<Type, Object[]> _objects = new Dictionary<Type, Object[]>();
         
         protected void Bind<C>(Type type) where C : Object
