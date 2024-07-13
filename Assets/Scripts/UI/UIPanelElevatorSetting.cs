@@ -17,6 +17,11 @@ public class UIPanelElevatorSetting : UIPanel
         {
             Debug.LogError($"UIPanelElevatorSetting: elevatorSettingUIs is not three {elevatorSettingUIs.Count}");
         }
+
+        for(int i = 0; i < 3; i++)
+        {
+            elevatorSettingUIs[i].SetElevatorIndex(i);
+        }
     }
 
     void OnClickClose()
@@ -56,5 +61,4 @@ public class UIPanelElevatorSetting : UIPanel
             elevatorSettingUIs[i].gameObject.SetActive(true);
         }
     }
-    
 }

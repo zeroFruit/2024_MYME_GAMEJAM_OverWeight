@@ -5,16 +5,9 @@ using UnityEngine.UI;
 public class UISectionElevatorStatus : MonoBehaviour
 {
     [Header("Binding")]
-    public Button ChangeAlgorithmButton;
-    public UIPanel AlgorithmSelectionPanel;
-
-    void Awake()
+    public int ElevatorIndex;
+    public void SetElevatorIndex(int index)
     {
-        this.ChangeAlgorithmButton.onClick.AddListener(this.OnClickChangeAlgorithm);
-    }
-
-    void OnClickChangeAlgorithm()
-    {
-        this.AlgorithmSelectionPanel.Show(null);
+        ElevatorIndex = index;
     }
 }
