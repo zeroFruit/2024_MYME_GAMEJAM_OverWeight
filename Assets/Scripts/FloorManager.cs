@@ -50,7 +50,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         {
             Floor floor = Instantiate(floorPrefab);
             floor.name += $"{idx}";
-            floor.Init(slotPrefab, idx, "블록체인 연구소", FloorTimerPrefab);
+            floor.Init(slotPrefab, idx, FloorName.NameList[idx], FloorTimerPrefab);
             Floors.Add(floor.GetComponent<Floor>());
             if (floor.FloorIdx < initialFloorNum)
             {
