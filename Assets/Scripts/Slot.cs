@@ -18,6 +18,5 @@ public class Slot : MonoBehaviour
     {
         SlotUiData uiData = SlotUiData.GetSlotUiData(FloorIdx, SlotIdx);
         transform.localPosition = new Vector3(uiData.localPosX, uiData.localPosY, 0);
-        transform.localScale = new Vector3(uiData.scaleX, uiData.scaleY, 1);
     }
 }

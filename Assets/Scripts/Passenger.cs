@@ -22,8 +22,8 @@ public class Passenger : MonoBehaviour
         Weight = 20;
         isReadyToRide = false;
 
-        maxX = 0.3f;
-        movingSpeed = 1;
+        maxX = 0.2f;
+        movingSpeed = 2;
 
         SpawnedAt = DateTime.Now;
         inElevator = false;
@@ -31,7 +31,7 @@ public class Passenger : MonoBehaviour
 
     private void Start()
     {
-        transform.localPosition = new Vector3(maxX * -1f, 0.45f, 0);
+        transform.localPosition = new Vector3(maxX * -1f, 0.6f, 0);
     }
 
     private void Update()

@@ -19,6 +19,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     [Header("Prefab")] public Floor floorPrefab;
     public Slot slotPrefab;
+    public FloorTimer FloorTimerPrefab;
 
     protected override void Awake()
     {
@@ -31,7 +32,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         for (int idx = 0; idx < day; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
-            floor.Init(slotPrefab, idx);
+            floor.Init(slotPrefab, idx, FloorTimerPrefab);
             Floors.Add(floor.GetComponent<Floor>());
         }
     }
@@ -91,11 +92,13 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         this.StopListeningEvent<ElevatorArrivalEvent>();
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
     }
-    
+
+    #region Debug
     [InspectorButton("TestRemovePassenger")] public bool TestRemovePassengerButton;
 
     void TestRemovePassenger()
     {
         ElevatorPassengerEnteredEvent.Trigger(PassengerManager.Instance.Passengers.First());
     }
+    #endregion
 }

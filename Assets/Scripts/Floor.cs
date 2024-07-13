@@ -13,36 +13,38 @@ public class Floor : MonoBehaviour
     public int spawnProbability;
     public List<Slot> Slots;
     public List<Passenger> Passengers;
-
-    public void Init(Slot slotPrefab, int floorIdx)
+    public FloorTimer timer;
+    
+    
+    public void Init(Slot slotPrefab, int floorIdx, FloorTimer floorTimer)
     {
         FloorIdx = floorIdx;
         capacityOfPassengers = 7;
         maxCapacityOfPassengers = 10;
         spawnProbability = 100;
         Slots = new List<Slot>();
-        for (int idx = 0; idx < capacityOfPassengers; idx++)
+        for (int idx = 0; idx < maxCapacityOfPassengers; idx++)
         {
             Slot slot = Instantiate(slotPrefab, transform);
             slot.Init(floorIdx, idx);
             Slots.Add(slot);
         }
-
         Passengers = new List<Passenger>();
+        timer = Instantiate(floorTimer, transform);
+        timer.Init();
     }
 
     public void Start()
     {
         FloorUiData uiData = FloorUiData.GetFloorUiData(FloorIdx);
         transform.localPosition = new Vector3(uiData.localPosX, uiData.localPosY, 0);
-        transform.localScale = new Vector3(uiData.scaleX, uiData.scaleY, 1);
     }
 
     public void SpawnPassenger()
     {
         if (Passengers.Count >= capacityOfPassengers)
         {
-            Debug.Log("Floor Timer Start!!!");
+            timer.Progress(10f);
         }
 
         if (Passengers.Count < maxCapacityOfPassengers)
@@ -52,9 +54,6 @@ public class Floor : MonoBehaviour
                 Passenger newPassenger = PassengerManager.Instance.Spawn(this);
                 newPassenger.transform.SetParent(getEmptySlot().transform);
                 Passengers.Add(newPassenger);
-                // test @roy
-                newPassenger.StartFloor = this;
-                newPassenger.TargetFloor = FloorManager.Instance.GetRandomFloor(this);
             }
         }
     }
@@ -96,8 +95,11 @@ public class Floor : MonoBehaviour
     public void OnboardPassenger(Passenger passenger)
     {
         Passengers.Remove(passenger);
-        // 승객 줄 당기기
         RearrangePassengers();
+        if (Passengers.Count() < capacityOfPassengers)
+        {
+            timer.ResetProgress();
+        }
     }
 
     private void RearrangePassengers()
