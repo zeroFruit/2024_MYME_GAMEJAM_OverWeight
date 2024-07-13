@@ -9,6 +9,8 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
 
     public Passenger passengerPrefab;
 
+    public int totalOffboardingPassengerCount = 0;
+
     protected override void Awake()
     {
         base.Awake();
@@ -45,6 +47,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
 
     public void OnEvent(ElevatorPassengerExitEvent e)
     {
+        this.totalOffboardingPassengerCount+=1;
         Destroy(e.Passenger.gameObject);
     }
     

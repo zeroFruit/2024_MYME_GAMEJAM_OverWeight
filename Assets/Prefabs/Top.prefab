@@ -1170,6 +1170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4093003208264797823}
+  - component: {fileID: 7026282268998062412}
   m_Layer: 5
   m_Name: Passengers
   m_TagString: Untagged
@@ -1197,6 +1198,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 77.901, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7026282268998062412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152619589026397623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab7f84ae88ee42d59ee90ca932bf38f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passengerText: {fileID: 9050308098948372838}
 --- !u!1 &5155685543122349540
 GameObject:
   m_ObjectHideFlags: 0
