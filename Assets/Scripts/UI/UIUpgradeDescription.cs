@@ -4,21 +4,19 @@ using UnityEngine;
 public class UIUpgradeDescription : MonoBehaviour
 {
     public int elevatorIndex;
-    public TMP_Text elevatorCapacityText;
+    public TMP_Text upgradeDescriptionText;
     public void SetElevatorIndex(int index)
     {
         elevatorIndex = index;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public void Update() {
+        var elevatorManager = ElevatorManager.Instance;
+        if (elevatorManager._elevators.Count <= elevatorIndex) {
+            return;
+        }
+        var upgrade = UpgradeManager.Instance.ElevatorUpgrades[elevatorIndex];
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        upgradeDescriptionText.text = $"공간 업그레이드 Lv. {upgrade.CurrentSpaceLevel}\n속도 업그레이드 Lv. {upgrade.CurrentSpeedLevel}\n비용 절감 업그레이드 Lv. {upgrade.CurrentOptCostLevel}";
     }
 }
