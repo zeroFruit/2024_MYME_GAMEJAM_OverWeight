@@ -7,9 +7,11 @@ public enum DayEventType
     /// </summary>
     ProgressUpdated,
     
-    Ended,
+    DayStarted,
     
-    WaveStart,
+    DayEnded,
+    
+    WaveStarted,
     
     WaveEnded,
 }

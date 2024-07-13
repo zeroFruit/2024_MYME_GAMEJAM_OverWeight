@@ -15,10 +15,10 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
         Passengers = new List<Passenger>();
     }
 
-    public Passenger Spawn(Floor floor)
+    public Passenger Spawn(Floor start, Floor target)
     {
         Passenger spawned = Instantiate(passengerPrefab);
-        spawned.Init(floor);
+        spawned.Init(start, target);
         Passengers.Add(spawned);
         return spawned;
     }

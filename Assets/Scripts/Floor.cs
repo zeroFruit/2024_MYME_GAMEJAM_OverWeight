@@ -4,25 +4,37 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Floor : MonoBehaviour
 {
     public int FloorIdx;
-    public int capacityOfPassengers;
+
+    [Header("FloorInfo")] public int capacityOfPassengers;
     public int maxCapacityOfPassengers;
-    public int spawnProbability;
-    public List<Slot> Slots;
+    [Header("SpawnProbability")] public int normalSpawnProbability;
+    public int onWorkSpawnProbability;
+    public int lunchSpawnProbability;
+    public int offWorkSpawnProbability;
+    [Header("InnerData")] public List<Slot> Slots;
     public List<Passenger> Passengers;
     public FloorTimer timer;
-    
-    
+
+    public WaveType WaveType;
+
+
     public void Init(Slot slotPrefab, int floorIdx, FloorTimer floorTimer)
     {
         FloorIdx = floorIdx;
         capacityOfPassengers = 7;
         maxCapacityOfPassengers = 10;
-        spawnProbability = 100;
+
+        normalSpawnProbability = 20;
+        onWorkSpawnProbability = 70;
+        lunchSpawnProbability = 40;
+        offWorkSpawnProbability = 70;
+
         Slots = new List<Slot>();
         for (int idx = 0; idx < maxCapacityOfPassengers; idx++)
         {
@@ -34,6 +46,7 @@ public class Floor : MonoBehaviour
         Passengers = new List<Passenger>();
         timer = Instantiate(floorTimer, transform);
         timer.Init();
+        WaveType = WaveType.None;
     }
 
     public void Start()
@@ -44,20 +57,111 @@ public class Floor : MonoBehaviour
 
     public void SpawnPassenger()
     {
+        // 승객 초과 타이머 체크
         if (Passengers.Count >= capacityOfPassengers)
         {
             timer.Progress(10f);
         }
 
+        // 최대 승객 수까지 승객 생성
         if (Passengers.Count < maxCapacityOfPassengers)
         {
-            if (isSpawnedRandomly())
+            Debug.Log("WaveType : " + WaveType);
+            // 웨이브에 맞게 승객 생성
+            switch (this.WaveType)
             {
-                Passenger newPassenger = PassengerManager.Instance.Spawn(this);
-                newPassenger.transform.SetParent(getEmptySlot().transform);
-                Passengers.Add(newPassenger);
+                case WaveType.None:
+                    SpawnNoneWave();
+                    break;
+                case WaveType.OnWork:
+                    SpawnOnWorkWave();
+                    break;
+                case WaveType.Lunch:
+                    SpawnLunchWave();
+                    break;
+                case WaveType.OffWork:
+                    SpawnOffWorkWave();
+                    break;
+                default:
+                    Debug.Log("Floor: Unhandled WaveType! - " + WaveType.ToString());
+                    break;
             }
         }
+    }
+
+    private void SpawnNoneWave()
+    {
+        // 스폰 여부 체크
+        if (GetResultFromProbability(normalSpawnProbability))
+        {
+            spawn();
+        }
+    }
+
+    private void SpawnOnWorkWave()
+    {
+        // 1층이 아닌 층은 일반 스폰
+        if (this.FloorIdx != 0)
+        {
+            SpawnNoneWave();
+            return;
+        }
+
+        // 1층은 출근 확률 적용 스폰
+        if (GetResultFromProbability(onWorkSpawnProbability))
+        {
+            spawn();
+        }
+    }
+
+    private void SpawnLunchWave()
+    {
+        // 점심먹으러 1층 가는 사람 스폰
+        if (GetResultFromProbability(lunchSpawnProbability))
+        {
+            spawn(FloorManager.Instance.Floors.First());
+            return;
+        }
+
+        // 점심먹고 올라오는 사람 스폰
+        if (FloorIdx == 0)
+        {
+            if (GetResultFromProbability(lunchSpawnProbability))
+            {
+                spawn();
+                return;
+            }
+        }
+
+        // 나머지
+        if (GetResultFromProbability(normalSpawnProbability))
+        {
+            spawn();
+        }
+    }
+
+    private void SpawnOffWorkWave()
+    {
+        // 스폰 여부 체크
+        if (GetResultFromProbability(normalSpawnProbability))
+        {
+            // 퇴근길로 1층 갈 확률 적용
+            if (GetResultFromProbability(offWorkSpawnProbability))
+            {
+                spawn(FloorManager.Instance.Floors.First());
+                return;
+            }
+
+            // 퇴근이 아닌 승객 스폰
+            spawn();
+        }
+    }
+
+    private void spawn(Floor target = null)
+    {
+        Passenger newPassenger = PassengerManager.Instance.Spawn(this, target);
+        newPassenger.transform.SetParent(getEmptySlot().transform);
+        Passengers.Add(newPassenger);
     }
 
     private Slot getEmptySlot()
@@ -65,10 +169,10 @@ public class Floor : MonoBehaviour
         return Slots[Passengers.Count];
     }
 
-    private bool isSpawnedRandomly()
+    private bool GetResultFromProbability(int probability)
     {
-        int probability = Random.Range(0, spawnProbability);
-        return probability <= capacityOfPassengers;
+        int rand = Random.Range(0, 100);
+        return rand <= probability;
     }
 
     public List<Passenger> GetPassengersToOnboard(ElevatorController elevator, int remainWeight,
@@ -151,5 +255,17 @@ public class Floor : MonoBehaviour
     public static bool operator <(Floor left, Floor right)
     {
         return left.FloorIdx < right.FloorIdx;
+    }
+
+    public void ResetFloor()
+    {
+        timer.ResetProgress();
+        Passengers.Clear();
+        RearrangePassengers();
+    }
+
+    public void changeWave(WaveType waveType)
+    {
+        this.WaveType = waveType;
     }
 }

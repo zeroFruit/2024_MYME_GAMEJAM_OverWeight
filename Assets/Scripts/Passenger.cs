@@ -15,10 +15,11 @@ public class Passenger : MonoBehaviour
     public bool inElevator;
     public ElevatorController queuedElevator;
 
-    public void Init(Floor floor)
+    public void Init(Floor start, Floor target)
     {
-        StartFloor = floor;
-        TargetFloor = FloorManager.Instance.GetRandomFloor(floor);
+        StartFloor = start;
+        TargetFloor = target ? target : FloorManager.Instance.GetRandomFloor(start);
+        
         Weight = 1;
         isReadyToRide = false;
 

@@ -38,6 +38,8 @@ public class DayManager : Singleton<DayManager>
         {
             this._dayWavesCompleted[dayWave.WaveType] = false;
         }
+        
+        DayEvent.Trigger(DayEventType.DayStarted);
     }
 
     void Update()
@@ -59,7 +61,7 @@ public class DayManager : Singleton<DayManager>
 
         if (this.Progress >= this.DayLengthSeconds)
         {
-            DayEvent.Trigger(DayEventType.Ended);
+            DayEvent.Trigger(DayEventType.DayEnded);
             return;
         }
 
@@ -82,7 +84,7 @@ public class DayManager : Singleton<DayManager>
                 {
                     // 웨이브 시작
                     this._currentWave = dayWave.WaveType;
-                    DayEvent.Trigger(DayEventType.WaveStart, this._currentWave);
+                    DayEvent.Trigger(DayEventType.WaveStarted, this._currentWave);
                     Debug.Log($"wave started: {this._currentWave}");
                     return;
                 }

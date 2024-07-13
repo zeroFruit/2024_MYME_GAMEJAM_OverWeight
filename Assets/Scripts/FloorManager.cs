@@ -8,10 +8,13 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArrivalEvent>,
-    EventListener<ElevatorPassengerEnteredEvent>
+    EventListener<ElevatorPassengerEnteredEvent>, EventListener<DayEvent>
 {
     public List<Floor> Floors { get; private set; }
-    public int day; // temp
+
+    [Header("Game")] public int day; // temp
+
+    public bool isPlaying;
 
     [Header("Spawn")] public float spawnTimer;
     public float spawnSpeed;
@@ -26,6 +29,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         base.Awake();
         Floors = new List<Floor>();
         day = 14;
+        isPlaying = false;
         spawnTimer = 0;
         spawnSpeed = 3f;
         spawnTiming = 10;
@@ -40,11 +44,14 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     void Update()
     {
-        spawnTimer += Time.deltaTime * spawnSpeed;
-        if (spawnTimer >= spawnTiming)
+        if (isPlaying)
         {
-            spawnTimer = 0;
-            SpawnPassenger();
+            spawnTimer += Time.deltaTime * spawnSpeed;
+            if (spawnTimer >= spawnTiming)
+            {
+                spawnTimer = 0;
+                SpawnPassenger();
+            }
         }
     }
 
@@ -82,24 +89,76 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         return selected;
     }
 
+
+    public void OnEvent(DayEvent e)
+    {
+        switch (e.EventType)
+        {
+            case DayEventType.DayStarted:
+                this.isPlaying = true;
+                break;
+            case DayEventType.DayEnded:
+                this.isPlaying = false;
+                this.reset();
+                break;
+            case DayEventType.WaveStarted:
+                this.ApplyWave((WaveType)e.Args);
+                break;
+            case DayEventType.WaveEnded:
+                this.ApplyWave(WaveType.None);
+                break;
+            default:
+                Debug.Log("FloorManager: Unhandled Event Type! - " + e.EventType.ToString());
+                break;
+        }
+
+        this.isPlaying = true;
+    }
+
+    private void ApplyWave(WaveType waveType)
+    {
+        foreach (var floor in Floors)
+        {
+            floor.changeWave(waveType);
+        }
+    }
+
+    private void ResetWave(WaveType waveType)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void reset()
+    {
+        foreach (var floor in Floors)
+        {
+            floor.ResetFloor();
+        }
+    }
+
     void OnEnable()
     {
         this.StartListeningEvent<ElevatorArrivalEvent>();
         this.StartListeningEvent<ElevatorPassengerEnteredEvent>();
+        this.StartListeningEvent<DayEvent>();
     }
 
     void OnDisable()
     {
         this.StopListeningEvent<ElevatorArrivalEvent>();
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
+        this.StartListeningEvent<DayEvent>();
     }
 
     #region Debug
-    [InspectorButton("TestRemovePassenger")] public bool TestRemovePassengerButton;
+
+    [InspectorButton("TestRemovePassenger")]
+    public bool TestRemovePassengerButton;
 
     void TestRemovePassenger()
     {
         ElevatorPassengerEnteredEvent.Trigger(PassengerManager.Instance.Passengers.First());
     }
+
     #endregion
 }
