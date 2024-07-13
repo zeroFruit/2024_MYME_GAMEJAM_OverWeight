@@ -18,7 +18,7 @@ public class UIPanelElevatorUpgrade : UIPanel
     [Header("Binding")]
     public Button CloseButton;
 
-    List<UIItem> _items;
+    List<UIItem> _items = new List<UIItem>();
 
     protected override void Awake()
     {
