@@ -146,7 +146,7 @@ public class Floor : MonoBehaviour
     private void SpawnLunchWave()
     {
         // 점심먹으러 1층 가는 사람 스폰
-        if (GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
+        if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
         {
             spawn(FloorManager.Instance.Floors.First());
             return;
@@ -175,7 +175,7 @@ public class Floor : MonoBehaviour
         if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
         {
             // 퇴근길로 1층 갈 확률 적용
-            if (GetResultFromProbability(FloorManager.Instance.offWorkSpawnProbability))
+            if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.offWorkSpawnProbability))
             {
                 spawn(FloorManager.Instance.Floors.First());
                 return;

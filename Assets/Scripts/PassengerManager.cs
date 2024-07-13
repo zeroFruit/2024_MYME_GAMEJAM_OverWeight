@@ -3,7 +3,7 @@ using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PassengerManager : Singleton<PassengerManager>, EventListener<ElevatorPassengerEnteredEvent>, EventListener<ElevatorPassengerExitEvent>
+public class PassengerManager : Singleton<PassengerManager>, EventListener<ElevatorPassengerExitEvent>
 {
     public List<Passenger> Passengers;
 
@@ -37,12 +37,6 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
         }
 
         return result;
-    }
-
-    public void OnEvent(ElevatorPassengerEnteredEvent e)
-    {
-        // Passengers.Remove(e.Passenger);
-        // e.Passenger.gameObject.SetActive(false);
     }
 
     public void OnEvent(ElevatorPassengerExitEvent e)
@@ -111,13 +105,11 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     
     void OnEnable()
     {
-        this.StartListeningEvent<ElevatorPassengerEnteredEvent>();
         this.StartListeningEvent<ElevatorPassengerExitEvent>();
     }
 
     void OnDisable()
     {
-        this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
         this.StopListeningEvent<ElevatorPassengerExitEvent>();
     }   
 }
