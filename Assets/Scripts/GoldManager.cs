@@ -15,7 +15,7 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
     public void OnEvent(ElevatorSettleUpEvent e)
     {
         int unitPriceBySpeed = GetUnitPriceBySpeed(e.Elevator._speed);
-        float weight = e.AffectedCapacity + GetEmptyWeight(e.Elevator._maxCapacity);
+        float weight = e.AffectedCapacity + e.Elevator.EmptyWeight;
         int minusAffectedGold =
             (int)(unitPriceBySpeed * weight * Mathf.Abs(e.ArrivalFloor.FloorIdx - e.StartFloor.FloorIdx));
         int plustAffectedGold = 0;
@@ -23,6 +23,11 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
         {
             plustAffectedGold += Random.Range(50, 200);
         }
+
+        int discount = (int)(minusAffectedGold * UpgradeManager.Instance.ElevatorUpgrades[e.Elevator.ElevatorIdx]
+            .CurrentOptCostUpgrade.AdditionalSaveCost / 100);
+        minusAffectedGold -= discount;
+
 
         int beforeGold = CurrentGold;
         CurrentGold += plustAffectedGold;
@@ -44,21 +49,6 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
 
         // float a = GetEmptyElevator
         // throw new System.NotImplementedException();
-    }
-
-    private float GetEmptyWeight(int elevatorMaxCapacity)
-    {
-        if (elevatorMaxCapacity >= 8)
-        {
-            return 2;
-        }
-
-        if (elevatorMaxCapacity >= 6)
-        {
-            return 1.5f;
-        }
-
-        return 1;
     }
 
     public int GetUnitPriceBySpeed(float speed)

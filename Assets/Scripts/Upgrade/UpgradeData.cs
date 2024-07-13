@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum UpgradeType
 {
@@ -24,9 +25,9 @@ public class UpgradeData : ScriptableObject
     public int Level;
 
     [Header("Value")] 
-    public float AdditionalWeight;
+    public float EmptyWeight;
     
-    public float AdditionalCapacity;
+    public int MaxCapacity;
 
     public float AdditionalMaxSpeed;
 

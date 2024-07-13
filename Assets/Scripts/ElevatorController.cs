@@ -10,11 +10,14 @@ using Object = UnityEngine.Object;
 
 public class ElevatorController : MonoBehaviour
 {
+    public int ElevatorIdx;
     // 속도
     public float _speed = 3.0f;
 
     // 최대 수용
     public int _maxCapacity;
+    
+    public float EmptyWeight;
 
     // 멈출 수 있는 층
     public List<Floor> StoppableFloors;
@@ -36,10 +39,14 @@ public class ElevatorController : MonoBehaviour
     }
 
     public void Init(
+        int elevatorIdx,
         List<Floor> stoppableFloors,
         Floor lobbyFloor,
-        int maxCapacity)
+        int maxCapacity,
+        float emptyWeight
+    )
     {
+        ElevatorIdx = elevatorIdx;
         StoppableFloors = stoppableFloors;
         Passengers = new List<Passenger>();
         CurrentDirection = ElevatorDirection.UNWARE;
@@ -47,6 +54,7 @@ public class ElevatorController : MonoBehaviour
         TargetFloor = lobbyFloor;
         _previousFloor = lobbyFloor;
         _maxCapacity = maxCapacity;
+        EmptyWeight = emptyWeight;
 
         BoxScripts = new List<BoxScript>(gameObject.GetComponentsInChildren<BoxScript>());
         foreach (var boxScript in BoxScripts)
@@ -91,7 +99,6 @@ public class ElevatorController : MonoBehaviour
 
             yield return null;
         }
-        
     }
 
     private void UpdateOnBoarding()
@@ -134,7 +141,7 @@ public class ElevatorController : MonoBehaviour
     {
         // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
         Debug.Log($"Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx}");
-        
+
         List<Passenger> exitWantPassengers = GetExitWantPassengers(_previousFloor);
         ElevatorSettleUpEvent.Trigger(
             _previousFloor,
@@ -143,8 +150,8 @@ public class ElevatorController : MonoBehaviour
             exitWantPassengers.Count,
             this
         );
-        
-        
+
+
         foreach (var passenger in exitWantPassengers)
         {
             Exit(passenger);
@@ -347,5 +354,27 @@ public class ElevatorController : MonoBehaviour
     public bool IsStoppable(Floor from, Floor to)
     {
         return IsStoppable(from) && IsStoppable(to);
+    }
+
+    public void ChangeCapacity(int maxCapacity)
+    {
+        _maxCapacity = maxCapacity;
+        BoxScripts = new List<BoxScript>(gameObject.GetComponentsInChildren<BoxScript>());
+        foreach (var boxScript in BoxScripts)
+        {
+            if (boxScript.Idx > maxCapacity - 1)
+            {
+                boxScript.gameObject.SetActive(false);
+            }
+            else
+            {
+                boxScript.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void ChangeEmptyWeight(float emptyWeight)
+    {
+        EmptyWeight = emptyWeight;
     }
 }

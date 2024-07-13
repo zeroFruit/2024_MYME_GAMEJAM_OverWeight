@@ -19,6 +19,7 @@ MonoBehaviour:
   Icon: {fileID: 0}
   Cost: 1500
   Level: 2
-  AdditionalWeight: 1
-  AdditionalCapacity: 4
+  EmptyWeight: 2
+  MaxCapacity: 0
   AdditionalMaxSpeed: 0
+  AdditionalSaveCost: 0

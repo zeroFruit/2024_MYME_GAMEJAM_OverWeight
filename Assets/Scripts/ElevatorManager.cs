@@ -14,25 +14,27 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
     {
         float floorY = FloorManager.Instance.Floors.First().transform.position.y;
         GameObject ev1 = Instantiate(ElevatorPrefab);
-        GameObject ev2 = Instantiate(ElevatorPrefab);
-        GameObject ev3 = Instantiate(ElevatorPrefab);
         ev1.transform.position = new Vector2(11, floorY);
-        ev2.transform.position = new Vector2(16.5f, floorY);
-        ev3.transform.position = new Vector2(22, floorY);
         ElevatorController elevator1 = ev1.GetComponent<ElevatorController>();
-        ElevatorController elevator2 = ev2.GetComponent<ElevatorController>();
-        ElevatorController elevator3 = ev3.GetComponent<ElevatorController>();
-        elevator1.Init(
+        elevator1.Init(0,
             FloorManager.Instance.Floors,
-            FloorManager.Instance.Floors.First(), 6);
-        List<Floor> testFloors = FloorManager.Instance.Floors.Where(floor => floor.FloorIdx > 5).ToList();
-        testFloors.Add(FloorManager.Instance.Floors.First());
-        elevator2.Init(testFloors, FloorManager.Instance.Floors.First(), 6);
-        elevator3.Init(testFloors, FloorManager.Instance.Floors.First(), 6);
+            FloorManager.Instance.Floors.First(), 4, 1);
         _elevators.Add(elevator1);
+        UpgradeManager.Instance.AddElevator();
+    }
+
+
+    public void AddElevator(int buyIdx)
+    {
+        float floorY = FloorManager.Instance.Floors.First().transform.position.y;
+        GameObject ev2 = Instantiate(ElevatorPrefab);
+        ev2.transform.position = new Vector2(11 + 5.5f * buyIdx, floorY);
+        ElevatorController elevator2 = ev2.GetComponent<ElevatorController>();
+        elevator2.Init(buyIdx,
+            FloorManager.Instance.Floors,
+            FloorManager.Instance.Floors.First(), 4, 1);
         _elevators.Add(elevator2);
-        _elevators.Add(elevator3);
-        // todo : elevator 추가
+        UpgradeManager.Instance.AddElevator();
     }
 
     public void Update()
@@ -103,7 +105,8 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             {
                 if (ev.CurrentState != ElevatorController.ElevatorState.IDLE)
                     continue;
-                if (!ev.IsFull() && ev.CurrentDirection == ElevatorDirection.UNWARE && ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
+                if (!ev.IsFull() && ev.CurrentDirection == ElevatorDirection.UNWARE &&
+                    ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
                 {
                     selectedElevator = ev;
                     break;
@@ -121,7 +124,8 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             {
                 ElevatorDirection unQueuedDirection =
                     unQueuedPassenger.StartFloor.DirectionTo(unQueuedPassenger.TargetFloor);
-                if (ev.CurrentDirection == unQueuedDirection && ev.CanStop(unQueuedPassenger.StartFloor)&&ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
+                if (ev.CurrentDirection == unQueuedDirection && ev.CanStop(unQueuedPassenger.StartFloor) &&
+                    ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
                 {
                     selectedElevator = ev;
                     break;
@@ -321,5 +325,15 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
     public bool IsQueueEmpty(ElevatorController ev)
     {
         return PassengerManager.Instance.GetQueuedPassengers(ev).Count == 0;
+    }
+
+    public void SetElevatorCapacity(int idx, int maxCapacity)
+    {
+        _elevators[idx].ChangeCapacity(maxCapacity);
+    }
+
+    public void SetEmptyWeight(int idx, float emptyWeight)
+    {
+        _elevators[idx].ChangeEmptyWeight(emptyWeight);
     }
 }
