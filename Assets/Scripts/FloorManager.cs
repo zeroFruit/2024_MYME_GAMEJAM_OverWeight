@@ -12,13 +12,13 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 {
     public List<Floor> Floors { get; private set; }
 
-    [Header("Game")] public int day; // temp
+    public int maxFloorNum;
+    public int initialFloorNum;
 
     public bool isPlaying;
 
     [Header("Spawn")] public float spawnTimer;
-    public float spawnSpeed;
-    public float spawnTiming;
+    public float spawnDuration;
     
     [Header("SpawnProbability")] public int normalSpawnProbability;
     public int onWorkSpawnProbability;
@@ -35,21 +35,25 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         base.Awake();
         Floors = new List<Floor>();
-        day = 14;
+        maxFloorNum = 14;
+        initialFloorNum = 6;
         isPlaying = false;
         spawnTimer = 0;
-        spawnSpeed = 3f;
-        spawnTiming = 10;
+        spawnDuration = 10f;
         normalSpawnProbability = 20;
         onWorkSpawnProbability = 70;
         lunchSpawnProbability = 40;
         offWorkSpawnProbability = 70;
-        for (int idx = 0; idx < day; idx++)
+        for (int idx = 0; idx < maxFloorNum; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
             floor.name += $"{idx}";
             floor.Init(slotPrefab, idx, FloorTimerPrefab);
             Floors.Add(floor.GetComponent<Floor>());
+            if (floor.FloorIdx < initialFloorNum)
+            {
+                floor.Actiavte();
+            }
         }
     }
 
@@ -57,8 +61,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         if (isPlaying)
         {
-            spawnTimer += Time.deltaTime * spawnSpeed;
-            if (spawnTimer >= spawnTiming)
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnDuration)
             {
                 spawnTimer = 0;
                 SpawnPassenger();
@@ -94,7 +98,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         Floor selected = without;
         while (selected == without)
         {
-            selected = Floors[Random.Range(0, Floors.Count)];
+            selected = Floors[Random.Range(0, GetNowFloorNum())];
         }
 
         return selected;
@@ -106,11 +110,17 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         switch (e.EventType)
         {
             case DayEventType.DayStarted:
+                foreach (var floor in Floors)
+                {
+                    if (floor.FloorIdx < GetNowFloorNum())
+                    {
+                        floor.Actiavte();   
+                    }
+                }
                 this.isPlaying = true;
                 break;
             case DayEventType.DayEnded:
                 this.isPlaying = false;
-                this.reset();
                 break;
             case DayEventType.WaveStarted:
                 this.ApplyWave((WaveType)e.Args);
@@ -124,19 +134,16 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         }
     }
 
+    public int GetNowFloorNum()
+    {
+        return initialFloorNum + DayManager.Instance.Day;
+    }
+
     private void ApplyWave(WaveType waveType)
     {
         foreach (var floor in Floors)
         {
             floor.changeWave(waveType);
-        }
-    }
-
-    private void reset()
-    {
-        foreach (var floor in Floors)
-        {
-            floor.ResetFloor();
         }
     }
 

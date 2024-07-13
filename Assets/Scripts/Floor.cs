@@ -13,10 +13,11 @@ public class Floor : MonoBehaviour
 
     [Header("FloorInfo")] public int capacityOfPassengers;
     public int maxCapacityOfPassengers;
-    
+
     [Header("InnerData")] public List<Slot> Slots;
     public List<Passenger> Passengers;
     public FloorTimer timer;
+    public bool isActivated;
 
     public WaveType WaveType;
 
@@ -38,6 +39,7 @@ public class Floor : MonoBehaviour
         Passengers = new List<Passenger>();
         timer = Instantiate(floorTimer, transform);
         timer.Init();
+        this.isActivated = false;
         WaveType = WaveType.None;
     }
 
@@ -47,8 +49,18 @@ public class Floor : MonoBehaviour
         transform.localPosition = new Vector3(uiData.localPosX, uiData.localPosY, 0);
     }
 
+    public void Actiavte()
+    {
+        this.isActivated = true;
+    }
+
     public void SpawnPassenger()
     {
+        if (!isActivated)
+        {
+            return;
+        }
+        
         // 승객 초과 타이머 체크
         if (Passengers.Count >= capacityOfPassengers)
         {
@@ -179,6 +191,7 @@ public class Floor : MonoBehaviour
             {
                 continue;
             }
+
             if (afterDirection != ElevatorDirection.UNWARE && passengerDirection != afterDirection)
             {
                 continue;
@@ -207,18 +220,21 @@ public class Floor : MonoBehaviour
 
     private void RearrangePassengers()
     {
+        List<Passenger> passengersToMove = new List<Passenger>();
         foreach (var slot in Slots)
         {
             Passenger child = slot.GetComponentInChildren<Passenger>();
             if (child != null)
             {
-                slot.GetComponentInChildren<Passenger>().transform.SetParent(null);
+                Passenger p = slot.GetComponentInChildren<Passenger>();
+                p.transform.SetParent(null);
+                passengersToMove.Add(p);
             }
         }
 
-        for (int idx = 0; idx < Passengers.Count; idx++)
+        for (int idx = 0; idx < passengersToMove.Count; idx++)
         {
-            Passengers[idx].transform.SetParent(Slots[idx].transform);
+            passengersToMove[idx].transform.SetParent(Slots[idx].transform);
         }
     }
 
@@ -247,13 +263,6 @@ public class Floor : MonoBehaviour
     public static bool operator <(Floor left, Floor right)
     {
         return left.FloorIdx < right.FloorIdx;
-    }
-
-    public void ResetFloor()
-    {
-        timer.ResetProgress();
-        Passengers.Clear();
-        RearrangePassengers();
     }
 
     public void StopFloor()

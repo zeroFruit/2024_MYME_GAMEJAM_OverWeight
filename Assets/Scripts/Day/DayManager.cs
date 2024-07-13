@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +14,8 @@ public class DayManager : Singleton<DayManager>
 {
     public float DayLengthSeconds = 300f;
     public List<DayWave> DayWaves;
+    public int Day;
+    public bool isInProgress;
     
     public float Progress;
 
@@ -28,7 +31,7 @@ public class DayManager : Singleton<DayManager>
         base.Awake();
         this.Initialize();
     }
-
+    
     public void Initialize()
     {
         this.Progress = 0f;
@@ -38,10 +41,26 @@ public class DayManager : Singleton<DayManager>
         {
             this._dayWavesCompleted[dayWave.WaveType] = false;
         }
-        
+
+        this.Day = 0;
+        this.isInProgress = false;
+        StartDay();
+    }
+
+    private void StartDay()
+    {
+        this.Progress = 0f;
+        this._progressTimer = 0f;
+        this.isInProgress = true;
         DayEvent.Trigger(DayEventType.DayStarted);
     }
 
+    private void StopDay()
+    {
+        this.isInProgress = false;
+        DayEvent.Trigger(DayEventType.DayEnded);
+    }
+    
     void Update()
     {
         this.ProgressDay();
@@ -49,6 +68,11 @@ public class DayManager : Singleton<DayManager>
 
     void ProgressDay()
     {
+        if (!isInProgress)
+        {
+            return;
+        }
+        
         this._progressTimer += Time.deltaTime;
         if (this._progressTimer < this._progressUpdateInterval)
         {
@@ -61,7 +85,9 @@ public class DayManager : Singleton<DayManager>
 
         if (this.Progress >= this.DayLengthSeconds)
         {
-            DayEvent.Trigger(DayEventType.DayEnded);
+            StopDay();
+            Day++;
+            StartDay();
             return;
         }
 
