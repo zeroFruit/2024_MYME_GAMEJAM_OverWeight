@@ -9,21 +9,20 @@ using Random = UnityEngine.Random;
 public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArrivalEvent>,
     EventListener<ElevatorPassengerEnteredEvent>
 {
-    private List<Floor> _floors;
+    public List<Floor> Floors { get; private set; }
     public int day; // temp
 
     [Header("Spawn")] public float spawnTimer;
     public float spawnSpeed;
     public float spawnTiming;
 
-    [Header("Prefab")]
-    public Floor floorPrefab;
+    [Header("Prefab")] public Floor floorPrefab;
     public Slot slotPrefab;
 
     protected override void Awake()
     {
         base.Awake();
-        _floors = new List<Floor>();
+        Floors = new List<Floor>();
         day = 14;
         spawnTimer = 0;
         spawnSpeed = 3f;
@@ -32,7 +31,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         {
             Floor floor = Instantiate(floorPrefab);
             floor.Init(slotPrefab, idx);
-            _floors.Add(floor.GetComponent<Floor>());
+            Floors.Add(floor.GetComponent<Floor>());
         }
     }
 
@@ -48,7 +47,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     private void SpawnPassenger()
     {
-        foreach (var floor in _floors)
+        foreach (var floor in Floors)
         {
             floor.SpawnPassenger();
         }
@@ -74,11 +73,12 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         Floor selected = without;
         while (selected == without)
         {
-            selected = _floors[Random.Range(0, _floors.Count)];
+            selected = Floors[Random.Range(0, Floors.Count)];
         }
 
         return selected;
     }
+
     void OnEnable()
     {
         this.StartListeningEvent<ElevatorArrivalEvent>();

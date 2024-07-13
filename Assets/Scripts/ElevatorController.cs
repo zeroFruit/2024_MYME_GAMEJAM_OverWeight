@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,11 +18,11 @@ public class ElevatorController : MonoBehaviour
     public Floor _previousFloor;
     public ElevatorState CurrentState { get; private set; }
 
-    private void Awake()
+    private void Start()
     {
         // for test
         Passengers = new List<Passenger>();
-        Init(GameObject.Find("Floor_0").GetComponent<Floor>(), 100);
+        Init(FloorManager.Instance.Floors.First(), 100);
     }
 
     public void Init(Floor lobbyFloor, int maxCapacity)
