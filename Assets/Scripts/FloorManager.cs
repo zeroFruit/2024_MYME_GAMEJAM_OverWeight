@@ -27,7 +27,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         int find = Mathf.RoundToInt(Random.Range(0, _floors.Count));
         foreach (Floor floor in _floors)
         {
-            if (find == floor.floorIdx)
+            if (find == floor.FloorIdx)
             {
                 return floor;
             }

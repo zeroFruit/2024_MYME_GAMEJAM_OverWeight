@@ -20,4 +20,9 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     {
         e.Passenger.gameObject.SetActive(false);
     }
+
+    public List<Passenger> GetMinimalSizePassengerPerFloor()
+    {
+        throw new System.NotImplementedException();
+    }
 }
