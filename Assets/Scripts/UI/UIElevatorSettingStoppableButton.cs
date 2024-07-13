@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
         Pass,
     }
 
-    public ElevatorSettingStoppableButtonType Type = ElevatorSettingStoppableButtonType.Pass;
+    public ElevatorSettingStoppableButtonType Type = ElevatorSettingStoppableButtonType.Stoppable;
     public Sprite stoppableSprite;
     public Sprite passSprite;
     // 0부터 시작
@@ -73,6 +74,29 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
                 break;
         }
 
-        // ElevatorManager.Instance.get
+        if (elevatorIndex >= ElevatorManager.Instance._elevators.Count)
+        {
+            Debug.LogWarning($"UIElevatorSettingStoppableButton: elevatorIndex is out of range {elevatorIndex}");
+            return;
+        }
+        var elevatorController = ElevatorManager.Instance._elevators[elevatorIndex];
+        var floor = FloorManager.Instance.Floors.FirstOrDefault(f => f.FloorIdx == this.floor);
+        if (floor == null) {
+            Debug.LogError($"floor not found {this.floor}");
+            Debug.LogError(FloorManager.Instance.Floors);
+            foreach (var floor_ in FloorManager.Instance.Floors)
+            {
+                Debug.LogError($"flor {floor_.FloorIdx} : {floor_}");
+            }
+        }
+        switch (Type)
+        {
+            case ElevatorSettingStoppableButtonType.Stoppable:
+                elevatorController.AddStoppableFloor(floor);
+                break;
+            case ElevatorSettingStoppableButtonType.Pass:
+                elevatorController.RemoveStoppableFloor(floor);
+                break;
+        }
     }
 }

@@ -46,7 +46,7 @@ public class ElevatorController : MonoBehaviour
     )
     {
         ElevatorIdx = elevatorIdx;
-        StoppableFloors = stoppableFloors;
+        StoppableFloors = stoppableFloors.ToList();
         Passengers = new List<Passenger>();
         CurrentDirection = ElevatorDirection.UNWARE;
         CurrentState = ElevatorState.IDLE;
@@ -374,5 +374,23 @@ public class ElevatorController : MonoBehaviour
     public void ChangeEmptyWeight(float emptyWeight)
     {
         EmptyWeight = emptyWeight;
+    }
+
+    internal void AddStoppableFloor(Floor floor)
+    {
+        foreach (var stoppable in StoppableFloors)
+        {
+            if (stoppable.FloorIdx == floor.FloorIdx)
+            {
+                return;
+            }
+        }
+
+        StoppableFloors.Add(floor);
+    }
+
+    internal void RemoveStoppableFloor(Floor floor)
+    {
+        StoppableFloors.RemoveAll(f => f.FloorIdx == floor.FloorIdx);
     }
 }

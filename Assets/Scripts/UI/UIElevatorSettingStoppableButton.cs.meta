@@ -4,9 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - buttonImage: {instanceID: 0}
-  - stoppableSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
-  - passSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  - stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
+  - passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
