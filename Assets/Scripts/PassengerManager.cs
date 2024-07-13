@@ -6,16 +6,40 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
 {
     private List<Passenger> _passengers;
 
-    public Passenger Spawn(Floor floor) // todo chagne it to customer
+    public Passenger passengerPrefab;
+
+    protected override void Awake()
     {
-        // prefab 에서 하나 만들고
-        // Customer go = Object.Instantiate<Customer>();
-        // Passenger created = go.AddComponent<Passenger>();
-        // _passengers.Add(created);
-        // return go;
-        return null;
+        base.Awake();
+        _passengers = new List<Passenger>();
     }
 
+    public Passenger Spawn(Floor floor)
+    {
+        Passenger spawned = Instantiate(passengerPrefab);
+        _passengers.Add(spawned);
+        return spawned;
+    }
+
+    void Despawn(Passenger passenger)
+    {
+        _passengers.Remove(passenger);
+        passenger.gameObject.SetActive(false);
+    }
+
+    public List<Passenger> GetPassengersOnFloor(Floor floor)
+    {
+        List<Passenger> result = new List<Passenger>();
+        foreach (var passenger in _passengers)
+        {
+            if (floor == passenger.StartFloor)
+            {
+                result.Add(passenger);
+            } 
+        }
+        return result;
+    }
+    
     public void OnEvent(ElevatorPassengerEnteredEvent e)
     {
         e.Passenger.gameObject.SetActive(false);

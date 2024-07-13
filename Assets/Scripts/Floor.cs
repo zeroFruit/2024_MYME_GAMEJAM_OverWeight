@@ -2,34 +2,54 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Floor : MonoBehaviour
 {
     public int FloorIdx { get; set; }
     public int capacityOfPassengers;
-    private List<Passenger> _passengers;
+    public int spawnProbability;
+    public List<Slot> Slots;
+    public List<Passenger> Passengers;
     
-    private void Awake()
+    public void Init()
     {
         FloorIdx = 0;
         capacityOfPassengers = 10;
-        _passengers = new List<Passenger>();
+        spawnProbability = 100;
+        Slots = new List<Slot>();
+        Passengers = new List<Passenger>();
     }
     
-    public void SpawnCustomer(Passenger passenger)
+    public void SpawnPassenger()
     {
-        _passengers.Add(passenger);
+        if (isSpawnedRandomly())
+        {
+            Passenger newPassenger = PassengerManager.Instance.Spawn(this);
+            newPassenger.transform.SetParent(getEmptySlot().transform);
+            Passengers.Add(newPassenger);
+        }
+    }
+
+    private Slot getEmptySlot()
+    {
+        return Slots[Passengers.Count];
+    }
+
+    private bool isSpawnedRandomly()
+    {
+        int probability = Random.Range(0, spawnProbability);
+        return probability <= capacityOfPassengers;
     }
 
     public List<Passenger> GetPassengersToOnboard(int remainWeight, ElevatorDirection afterDirection)
     {
-        
         throw new NotImplementedException();
     }
 
     public void OnboardPassenger(Passenger passenger)
     {
-        _passengers.Remove(passenger);
+        
     }
 
     public static ElevatorDirection operator -(Floor from, Floor to)

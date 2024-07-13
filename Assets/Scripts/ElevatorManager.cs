@@ -4,10 +4,6 @@ using UnityEngine.EventSystems;
 
 public class ElevatorManager : Singleton<ElevatorManager>, EventListener<ElevatorRestingEvent>
 {
-    public static bool Enter(List<Passenger> passengers)
-    {
-        throw new System.NotImplementedException();
-    }
     private List<ElevatorController> _elevators;
 
     public void Init()
