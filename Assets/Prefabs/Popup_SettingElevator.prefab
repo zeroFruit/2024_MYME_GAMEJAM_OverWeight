@@ -4393,7 +4393,7 @@ MonoBehaviour:
   CanvasGroup: {fileID: 1783160332467664474}
   FadeInDuration: 0.2
   FadeOutDuration: 0.2
-  CloseButton: {fileID: 0}
+  CloseButton: {fileID: 6590199623878279788}
   elevatorSettingUIs:
   - {fileID: 481165427092444002}
   - {fileID: 8403092383328221722}
