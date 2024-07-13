@@ -262,6 +262,7 @@ MonoBehaviour:
   CanvasGroup: {fileID: 41627314}
   FadeInDuration: 0.2
   FadeOutDuration: 0.2
+  CloseButton: {fileID: 1891253324}
   TestShowButton: 0
   TestHideButton: 0
 --- !u!225 &41627314
@@ -1681,10 +1682,10 @@ RectTransform:
   - {fileID: 336469543}
   m_Father: {fileID: 853502487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 747.915, y: 670}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &411916239
 MonoBehaviour:
@@ -3564,7 +3565,6 @@ GameObject:
   - component: {fileID: 853502491}
   - component: {fileID: 853502490}
   - component: {fileID: 853502489}
-  - component: {fileID: 853502488}
   m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
@@ -3592,32 +3592,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -31.065}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &853502488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 853502486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &853502489
 MonoBehaviour:
   m_ObjectHideFlags: 0
