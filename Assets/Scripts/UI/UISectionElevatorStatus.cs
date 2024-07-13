@@ -13,7 +13,11 @@ public class UISectionElevatorStatus : MonoBehaviour
         ElevatorIndex = index;
     }
 
-    void Update() {
-
+    public void Awake() {
+        var buttons = GetComponentsInChildren<UIElevatorSettingStoppableButton>();
+        foreach (var button in buttons)
+        {
+            button.SetElevatorIndex(ElevatorIndex);
+        }
     }
 }

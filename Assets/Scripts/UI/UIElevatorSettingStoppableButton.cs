@@ -19,6 +19,7 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
 
     private Image buttonImage;
     private Button button;
+    private int elevatorIndex = 0;
 
     void Awake()
     {
@@ -38,6 +39,11 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
         button.onClick.AddListener(OnClick);
 
         Change(this.Type);
+    }
+
+    public void SetElevatorIndex(int index)
+    {
+        elevatorIndex = index;
     }
 
     private void OnClick()
@@ -66,5 +72,7 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
                 buttonImage.sprite = passSprite;
                 break;
         }
+
+        // ElevatorManager.Instance.get
     }
 }
