@@ -26,7 +26,7 @@ public class UIPanelElevatorSetting : UIPanel
     
     void TestShow()
     {
-        this.Show(null);    
+        this.Show(null);
     }
     
     void TestHide()
