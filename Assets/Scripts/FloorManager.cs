@@ -40,12 +40,12 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         initialFloorNum = 6;
         isPlaying = false;
         spawnTimer = 0;
-        spawnDuration = 6f;
+        spawnDuration = 3f;
         spawnMinDuration = 2f;
-        normalSpawnProbability = 20;
-        onWorkSpawnProbability = 80;
-        lunchSpawnProbability = 60;
-        offWorkSpawnProbability = 80;
+        normalSpawnProbability = 10;
+        onWorkSpawnProbability = 40;
+        lunchSpawnProbability = 30;
+        offWorkSpawnProbability = 40;
         for (int idx = 0; idx < maxFloorNum; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
