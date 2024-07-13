@@ -11,7 +11,7 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
         Pass,
     }
 
-    public ElevatorSettingStoppableButtonType Type;
+    public ElevatorSettingStoppableButtonType Type = ElevatorSettingStoppableButtonType.Pass;
     public Image buttonImage;
     public Sprite stoppableSprite;
     public Sprite passSprite;
@@ -24,7 +24,10 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
         if (buttonImage == null)
         {
             Debug.LogError("UIElevatorSettingStoppableButton: buttonImage is not set");
+            return;
         }
+
+        Change(this.Type);
     }
 
     public void Change(ElevatorSettingStoppableButtonType type)
