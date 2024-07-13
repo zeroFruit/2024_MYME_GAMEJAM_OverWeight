@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2377c77f94f94dc1ab615971788f19a8, type: 3}
+  m_Name: SoundManagerSettings
+  m_EditorClassIdentifier: 
+  TargetAudioMixer: {fileID: 24100000, guid: 1be70e6c017b34cf2b67e5796f286c00, type: 2}
+  MasterAudioMixerGroup: {fileID: 24300002, guid: 1be70e6c017b34cf2b67e5796f286c00, type: 2}
+  MusicAudioMixerGroup: {fileID: -1242476802140832654, guid: 1be70e6c017b34cf2b67e5796f286c00, type: 2}
+  SfxAudioMixerGroup: {fileID: -5618431375029692790, guid: 1be70e6c017b34cf2b67e5796f286c00, type: 2}
+  UIAudioMixerGroup: {fileID: -8145676240735903291, guid: 1be70e6c017b34cf2b67e5796f286c00, type: 2}
+  MixerValuesMultiplier: 20
+  Settings:
+    OverrideMixerSettings: 1
+    MasterVolumeParameter: MasterVolume
+    MusicVolumeParameter: MusicVolume
+    SfxVolumeParameter: SfxVolume
+    UIVolumeParameter: UIVolume
+    MasterVolume: 1
+    MasterOn: 1
+    MutedMasterVolume: 0
+    MusicVolume: 1
+    MusicOn: 1
+    MutedMusicVolume: 0
+    SfxVolume: 1
+    SfxOn: 1
+    MutedSfxVolume: 0
+    UIVolume: 1
+    UIOn: 1
+    MutedUIVolume: 0
+    AutoLoad: 1
+    AutoSave: 0
