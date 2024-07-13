@@ -18,12 +18,19 @@ public class UIItem : UIBase
         Button_Upgrade
     }
 
+    public enum Images
+    {
+        Image_Upgrade,
+    }
+
     TextMeshProUGUI _nameText;
     TextMeshProUGUI _descriptionText;
     TextMeshProUGUI _buttonText;
     TextMeshProUGUI _buttonLevel;
 
     Button _upgradeButton;
+
+    private Image _upgradeImage;
 
     UpgradeType _upgradeType;
     int _index;
@@ -38,6 +45,7 @@ public class UIItem : UIBase
     {
         Bind<TextMeshProUGUI>(typeof(Texts));
         Bind<Button>(typeof(Buttons));
+        Bind<Image>(typeof(Images));
 
         this._nameText = Get<TextMeshProUGUI>((int)Texts.Text_Name);
         this._descriptionText = Get<TextMeshProUGUI>((int)Texts.Text_Description);
@@ -46,6 +54,8 @@ public class UIItem : UIBase
 
         this._upgradeButton = Get<Button>((int)Buttons.Button_Upgrade);
         this._upgradeButton.onClick.AddListener(this.OnClickUpgrade);
+
+        this._upgradeImage = Get<Image>((int)Images.Image_Upgrade);
     }
 
     public void Initialize(int idx, UpgradeData upgradeData)
@@ -58,6 +68,8 @@ public class UIItem : UIBase
         this._descriptionText.text = upgradeData.Description;
         this._buttonText.text = $"{upgradeData.Cost} 골드";
         this._buttonLevel.text = $"Lv{upgradeData.Level}";
+
+        this._upgradeImage.sprite = upgradeData.Icon;
 
         this.UpdateButtonInteractable();
     }
