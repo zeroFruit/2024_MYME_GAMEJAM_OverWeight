@@ -10,14 +10,20 @@ using Object = UnityEngine.Object;
 
 public class ElevatorController : MonoBehaviour
 {
+    // 속도
     public float _speed = 3.0f;
+    // 최대 수용
+    public int _maxCapacity;
+    // 멈출 수 있는 층
+    public List<Floor> StoppableFloors;
+    
     public float _accelerationThreshold = 1f;
     public float _decelerationThreshold = 1f;
-    public int _maxCapacity;
+    
     public List<Passenger> Passengers;
     public List<TextMeshPro> PassengerInfoText;
     public List<BoxScript> BoxScripts;
-    public List<Floor> StoppableFloors;
+    
     public Floor TargetFloor;
     public Floor _previousFloor;
     public ElevatorState CurrentState;

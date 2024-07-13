@@ -11,7 +11,13 @@ public class UIPanelElevatorUpgrade : UIPanel
         base.Awake();
         this.CloseButton.onClick.AddListener(this.OnClickClose);
     }
-    
+
+    public override void Show(Transform character)
+    {
+        // data setting
+        base.Show(character);
+    }
+
     void OnClickClose()
     {
         this.Hide();
