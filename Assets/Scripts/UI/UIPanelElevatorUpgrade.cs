@@ -1,21 +1,60 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIPanelElevatorUpgrade : UIPanel
 {
+    #region Binding
+
+    public enum GameObjects
+    {
+        ItemContent,
+    }
+
+    GameObject _itemContentRoot;
+
+    #endregion
+    
     [Header("Binding")]
     public Button CloseButton;
+
+    List<UIItem> _items;
 
     protected override void Awake()
     {
         base.Awake();
         this.CloseButton.onClick.AddListener(this.OnClickClose);
+        this.BindUI();
+    }
+
+    void BindUI()
+    {
+        Bind<GameObject>(typeof(GameObjects));
+
+        this._itemContentRoot = Get<GameObject>((int)GameObjects.ItemContent);
     }
 
     public override void Show(Transform character)
     {
-        // data setting
+        this.ClearAllItems();
+        // this.InstantiateItems();
+        
         base.Show(character);
+    }
+
+    void ClearAllItems()
+    {
+        foreach (UIItem uiItem in this._items)
+        {
+            Destroy(uiItem.gameObject);
+        }
+
+        this._items = new List<UIItem>();
+    }
+
+    void InstantiateItems(List<UpgradeData> upgradeDataList)
+    {
+        
     }
 
     void OnClickClose()

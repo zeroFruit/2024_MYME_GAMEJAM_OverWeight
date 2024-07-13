@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class UIPanel : MonoBehaviour
+public class UIPanel : UIBase
 {
     [Header("Bindings")]
     [Tooltip("a canvas group that manage this ui panel")]
