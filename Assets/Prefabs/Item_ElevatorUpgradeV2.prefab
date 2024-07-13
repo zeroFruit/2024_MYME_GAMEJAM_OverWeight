@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8847720353381442378}
   - component: {fileID: 2541472401427331526}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text_Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7736686728746645007}
   - component: {fileID: 2674336855411720239}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 3008528138853821367}
   - component: {fileID: 6018269452469407992}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text_Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 1330150290043396376}
   - component: {fileID: 5896131552678761578}
   m_Layer: 5
-  m_Name: Item_Algorithm
+  m_Name: Item_ElevatorUpgradeV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -20,10 +20,20 @@ public class UIPanelElevatorUpgrade : UIPanel
 
     List<UIItem> _items = new List<UIItem>();
 
+    List<UISectionElevatorUpgrade> _upgradeSections;
+
     protected override void Awake()
     {
         base.Awake();
         this.CloseButton.onClick.AddListener(this.OnClickClose);
+        
+        this._upgradeSections =
+            new List<UISectionElevatorUpgrade>(this.GetComponentsInChildren<UISectionElevatorUpgrade>());
+        foreach (UISectionElevatorUpgrade section in this._upgradeSections)
+        {
+            section.gameObject.SetActive(false);
+        }
+        
         this.BindUI();
     }
 
@@ -36,25 +46,33 @@ public class UIPanelElevatorUpgrade : UIPanel
 
     public override void Show(Transform character)
     {
-        this.ClearAllItems();
-        // this.InstantiateItems();
+        this.ActivateSections();
         
         base.Show(character);
     }
 
-    void ClearAllItems()
+    public override void Hide()
     {
-        foreach (UIItem uiItem in this._items)
-        {
-            Destroy(uiItem.gameObject);
-        }
-
-        this._items = new List<UIItem>();
+        base.Hide();
+        
+        this.DeactivateSections();
     }
 
-    void InstantiateItems(List<UpgradeData> upgradeDataList)
+    void ActivateSections()
     {
-        
+        for (int i = 0; i < UpgradeManager.Instance.ElevatorUpgrades.Count; i++)
+        {
+            this._upgradeSections[i].gameObject.SetActive(true);
+            this._upgradeSections[i].Initialize();
+        }
+    }
+    
+    void DeactivateSections()
+    {
+        for (int i = 0; i < _upgradeSections.Count; i++)
+        {
+            this._upgradeSections[i].gameObject.SetActive(false);
+        }
     }
 
     void OnClickClose()

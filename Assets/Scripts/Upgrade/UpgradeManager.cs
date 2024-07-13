@@ -16,12 +16,12 @@ public class ElevatorUpgradeStatus
 
 public class UpgradeManager : Singleton<UpgradeManager>
 {
-    [Header("Data")] public List<UpgradeData> AlgorithmUpgrades;
+    [Header("Data")]
     public List<UpgradeData> SpaceUpgrades;
     public List<UpgradeData> SpeedUpgrades;
     public List<UpgradeData> OptCostUpgrades;
 
-    [Header("State")] public List<string> CurrentHavingAlgorithms;
+    [Header("State")]
     public List<ElevatorUpgradeStatus> ElevatorUpgrades;
 
     Dictionary<string, UpgradeData> _upgradeDictionary = new Dictionary<string, UpgradeData>();
@@ -103,21 +103,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
         if (elevatorUpgradeStatus.CurrentOptCostLevel < this.OptCostUpgrades.Count)
         {
             result.Add(this.OptCostUpgrades[elevatorUpgradeStatus.CurrentOptCostLevel]);
-        }
-
-        return result;
-    }
-
-    public List<UpgradeData> GetUpgradeableAlgorithm()
-    {
-        List<UpgradeData> result = new List<UpgradeData>();
-
-        foreach (KeyValuePair<string, UpgradeData> keyValuePair in this._upgradeDictionary)
-        {
-            if (!this.CurrentHavingAlgorithms.Contains(keyValuePair.Key))
-            {
-                result.Add(keyValuePair.Value);
-            }
         }
 
         return result;
