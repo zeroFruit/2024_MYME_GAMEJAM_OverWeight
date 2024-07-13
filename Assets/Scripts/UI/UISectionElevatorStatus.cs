@@ -18,5 +18,6 @@ public class UISectionElevatorStatus : MonoBehaviour
         }
 
         GetComponentInChildren<UIElevatorCapacity>().SetElevatorIndex(ElevatorIndex);
+        GetComponentInChildren<UIUpgradeDescription>().SetElevatorIndex(ElevatorIndex);
     }
 }
