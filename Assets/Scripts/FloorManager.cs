@@ -20,7 +20,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     [Header("Spawn")] public float spawnTimer;
     public float spawnDuration;
     public float spawnMinDuration;
-    
+
     [Header("SpawnProbability")] public int normalSpawnProbability;
     public int onWorkSpawnProbability;
     public int lunchSpawnProbability;
@@ -45,7 +45,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         normalSpawnProbability = 10;
         onWorkSpawnProbability = 40;
         lunchSpawnProbability = 30;
-        offWorkSpawnProbability = 40;
+        offWorkSpawnProbability = 50;
         for (int idx = 0; idx < maxFloorNum; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
@@ -87,7 +87,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     public void OnEvent(ElevatorArrivalEvent e)
     {
-        List<Passenger> passengersToOnboard = e.ArrivalFloor.GetPassengersToOnboard(e.Elevator,e.RemainWeight, e.AfterDirection);
+        List<Passenger> passengersToOnboard =
+            e.ArrivalFloor.GetPassengersToOnboard(e.Elevator, e.RemainWeight, e.AfterDirection);
         foreach (Passenger passenger in passengersToOnboard)
         {
             ElevatorManager.Instance.Enter(passenger);
@@ -123,9 +124,10 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                 {
                     if (floor.FloorIdx < GetNowFloorNum())
                     {
-                        floor.Actiavte();   
+                        floor.Actiavte();
                     }
                 }
+
                 this.isPlaying = true;
                 break;
             case DayEventType.DayEnded:
@@ -164,7 +166,28 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         {
             floor.StopFloor();
         }
+
         GameOverPanel.Show(null);
+    }
+
+    public int GetNormalProbability()
+    {
+        return normalSpawnProbability + DayManager.Instance.Day;
+    }
+
+    public int GetOnWorkProbability()
+    {
+        return onWorkSpawnProbability + DayManager.Instance.Day;
+    }
+
+    public int GetLunchProbability()
+    {
+        return lunchSpawnProbability + DayManager.Instance.Day / 2;
+    }
+
+    public int GetOffWorkProbabiltiy()
+    {
+        return offWorkSpawnProbability + DayManager.Instance.Day;
     }
 
 
@@ -183,7 +206,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         this.StopListeningEvent<DayEvent>();
         this.StopListeningEvent<GameOverEvent>();
     }
-    
+
     #region Debug
 
     [InspectorButton("TestRemovePassenger")]

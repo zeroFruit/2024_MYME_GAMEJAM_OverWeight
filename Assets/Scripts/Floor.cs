@@ -132,7 +132,7 @@ public class Floor : MonoBehaviour
     private void SpawnNoneWave()
     {
         // 스폰 여부 체크
-        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.GetNormalProbability()))
         {
             spawn();
         }
@@ -148,7 +148,7 @@ public class Floor : MonoBehaviour
         }
 
         // 1층은 출근 확률 적용 스폰
-        if (GetResultFromProbability(FloorManager.Instance.onWorkSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.GetOnWorkProbability()))
         {
             spawn();
         }
@@ -157,7 +157,7 @@ public class Floor : MonoBehaviour
     private void SpawnLunchWave()
     {
         // 점심먹으러 1층 가는 사람 스폰
-        if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
+        if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.GetLunchProbability()))
         {
             spawn(FloorManager.Instance.Floors.First());
             return;
@@ -166,7 +166,7 @@ public class Floor : MonoBehaviour
         // 점심먹고 올라오는 사람 스폰
         if (FloorIdx == 0)
         {
-            if (GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
+            if (GetResultFromProbability(FloorManager.Instance.GetLunchProbability()))
             {
                 spawn();
                 return;
@@ -174,7 +174,7 @@ public class Floor : MonoBehaviour
         }
 
         // 나머지
-        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.GetNormalProbability()))
         {
             spawn();
         }
@@ -183,10 +183,10 @@ public class Floor : MonoBehaviour
     private void SpawnOffWorkWave()
     {
         // 스폰 여부 체크
-        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.GetNormalProbability()))
         {
             // 퇴근길로 1층 갈 확률 적용
-            if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.offWorkSpawnProbability))
+            if (this.FloorIdx != 0 && GetResultFromProbability(FloorManager.Instance.GetOffWorkProbabiltiy()))
             {
                 spawn(FloorManager.Instance.Floors.First());
                 return;
