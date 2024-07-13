@@ -32,7 +32,6 @@ public class UISectionElevatorUpgrade : MonoBehaviour,
         List<UpgradeData> nextUpgrades = UpgradeManager.Instance.GetElevatorNextUpgrades(this.Idx);
         for (int i = 0; i < nextUpgrades.Count; i++)
         {
-            Debug.Log($"i: {i}");
             this._upgradeSections[i].gameObject.SetActive(true);
             this._upgradeSections[i].Initialize(this.Idx, nextUpgrades[i]);
         }

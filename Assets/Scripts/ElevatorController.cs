@@ -245,7 +245,7 @@ public class ElevatorController : MonoBehaviour
                 continue;
             }
 
-            boxScript.SetText(passenger.TargetFloor.FloorIdx.ToString());
+            boxScript.SetText((passenger.TargetFloor.FloorIdx+1).ToString());
             break;
         }
 
@@ -263,7 +263,7 @@ public class ElevatorController : MonoBehaviour
         // todo : 사람 표시 제거
         foreach (var boxScript in BoxScripts)
         {
-            if (boxScript.IsText(passenger.TargetFloor.FloorIdx.ToString()))
+            if (boxScript.IsText((passenger.TargetFloor.FloorIdx+1).ToString()))
             {
                 boxScript.MakeEmpty();
                 break;

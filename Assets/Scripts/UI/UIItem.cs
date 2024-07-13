@@ -97,7 +97,7 @@ public class UIItem : UIBase
     {
         if (GoldManager.Instance.CurrentGold < this._cost)
             return;
-        
+        int chargeCost = _cost;
         Debug.Log($"Upgrade {this._upgradeType}");
         switch (this._upgradeType)
         {
@@ -114,10 +114,10 @@ public class UIItem : UIBase
         
         GoldChangedEvent.Trigger(
             0,
-            _cost,
+            chargeCost,
             GoldManager.Instance.CurrentGold,
-            GoldManager.Instance.CurrentGold - _cost
+            GoldManager.Instance.CurrentGold - chargeCost
         );
-        GoldManager.Instance.CurrentGold -= _cost;
+        GoldManager.Instance.CurrentGold -= chargeCost;
     }
 }
