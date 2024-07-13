@@ -42,6 +42,16 @@ public class UIElevatorSettingStoppableButton : MonoBehaviour
         Change(this.Type);
     }
 
+    IEnumerator Start() {
+        yield return new WaitForSeconds(1);
+        // 시작했을 때 1초 기다렸다가 정보를 받아옴.
+        Change(this.Type);
+    }
+
+    void OnEnable() {
+        Change(Type);
+    }
+
     public void SetElevatorIndex(int index)
     {
         elevatorIndex = index;

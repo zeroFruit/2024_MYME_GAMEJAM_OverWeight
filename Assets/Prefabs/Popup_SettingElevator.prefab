@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 9
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 7
@@ -1809,7 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 0
@@ -2081,7 +2081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 12
@@ -2355,7 +2355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 0
@@ -2627,7 +2627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 2
@@ -2765,7 +2765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 13
@@ -3157,7 +3157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 7
@@ -3295,7 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 11
@@ -3881,7 +3881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 9
@@ -4153,7 +4153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 12
@@ -4291,7 +4291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 0
@@ -4429,7 +4429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 5
@@ -5082,7 +5082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 3
@@ -5622,7 +5622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 10
@@ -5894,7 +5894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 11
@@ -6166,7 +6166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 8
@@ -6438,7 +6438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 4
@@ -6576,7 +6576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 13
@@ -6984,7 +6984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 5
@@ -7122,7 +7122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 6
@@ -7528,7 +7528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 8
@@ -7800,7 +7800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 7
@@ -8074,7 +8074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 10
@@ -8212,7 +8212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 6
@@ -8484,7 +8484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 4
@@ -8622,7 +8622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 4
@@ -9118,7 +9118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 3
@@ -9256,7 +9256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 3
@@ -9394,7 +9394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 2
@@ -9532,7 +9532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 13
@@ -9804,7 +9804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 5
@@ -10210,7 +10210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 1
@@ -10884,7 +10884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 6
@@ -11156,7 +11156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 1
@@ -11294,7 +11294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 12
@@ -11432,7 +11432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 2
@@ -11570,7 +11570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 8
@@ -11708,7 +11708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 10
@@ -11846,7 +11846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 1
@@ -11984,7 +11984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 11
@@ -12455,7 +12455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdd2e1cdc11f44e34b6b54fe4f39b0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 0
   stoppableSprite: {fileID: -7039722785806822577, guid: 9ba6080f48e134f918889abcc4f02921, type: 3}
   passSprite: {fileID: 993420161008440641, guid: aa1d0cbbbd58341b6a099b45d095ed60, type: 3}
   floor: 9
