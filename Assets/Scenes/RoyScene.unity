@@ -3213,6 +3213,7 @@ MonoBehaviour:
   floorPrefab: {fileID: 8317251025632870350, guid: 335d24a3e20214c56841afe8341f5793, type: 3}
   slotPrefab: {fileID: -7005209119626937544, guid: a20207568f9024aaab350090a01126fa, type: 3}
   FloorTimerPrefab: {fileID: 1502083898987170076, guid: a6f0ff4205598468a891fc40e4910840, type: 3}
+  GameOverPanel: {fileID: 0}
   TestRemovePassengerButton: 0
 --- !u!1 &725546653
 GameObject:
