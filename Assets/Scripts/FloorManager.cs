@@ -40,8 +40,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         initialFloorNum = 6;
         isPlaying = false;
         spawnTimer = 0;
-        spawnDuration = 8f;
-        spawnMinDuration = 3f;
+        spawnDuration = 6f;
+        spawnMinDuration = 2f;
         normalSpawnProbability = 20;
         onWorkSpawnProbability = 80;
         lunchSpawnProbability = 60;
