@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 3291819174311829905}
   - component: {fileID: 8021954445110287558}
   - component: {fileID: 828280621713567105}
+  - component: {fileID: 4600714149470047483}
   m_Layer: 0
   m_Name: Customer
   m_TagString: Untagged
@@ -269,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e90a3172c694bae9ff67d8c98c30cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Animator: {fileID: 4600714149470047483}
   StartFloor: {fileID: 0}
   TargetFloor: {fileID: 0}
   Weight: 0
@@ -277,3 +279,24 @@ MonoBehaviour:
   movingSpeed: 0
   inElevator: 0
   queuedElevator: {fileID: 0}
+--- !u!95 &4600714149470047483
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040231624767282015}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 865e16bf2814742b2b4e7c24572217a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

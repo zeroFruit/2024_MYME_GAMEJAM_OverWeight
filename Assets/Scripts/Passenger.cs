@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
+    public Animator Animator;
     public Floor StartFloor;
     public Floor TargetFloor;
     public int Weight; // 비중
@@ -47,5 +48,15 @@ public class Passenger : MonoBehaviour
         }
 
         transform.localPosition = new Vector3(nextPosX, curPos.y, curPos.z);
+    }
+
+    public void Angry()
+    {
+        this.Animator.SetBool("Angry", true);
+    }
+
+    public void CalmDown()
+    {
+        this.Animator.SetBool("Angry", false);
     }
 }

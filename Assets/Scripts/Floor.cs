@@ -90,6 +90,17 @@ public class Floor : MonoBehaviour
         if (Passengers.Count >= capacityOfPassengers)
         {
             timer.Progress(10f);
+            foreach (Passenger passenger in this.Passengers)
+            {
+                passenger.Angry();
+            }
+        }
+        else
+        {
+            foreach (Passenger passenger in this.Passengers)
+            {
+                passenger.CalmDown();
+            }
         }
 
         // 최대 승객 수까지 승객 생성
