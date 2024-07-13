@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SSR.OverWeight;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 public class ElevatorController : MonoBehaviour
 {
@@ -13,25 +15,39 @@ public class ElevatorController : MonoBehaviour
     public float _decelerationThreshold = 1f;
     public int _maxCapacity;
     public List<Passenger> Passengers;
-    public Floor TargetFloor { get; set; }
-    public Floor MoveStartFloor { get; private set; }
+    public List<TextMeshPro> PassengerInfoText;
+    public List<BoxScript> BoxScripts;
+    public List<Floor> StoppableFloors;
+    public Floor TargetFloor;
     public Floor _previousFloor;
-    public ElevatorState CurrentState { get; private set; }
+    public ElevatorState CurrentState;
+    public ElevatorDirection CurrentDirection;
 
     private void Start()
     {
-        // for test
-        Passengers = new List<Passenger>();
-        Init(FloorManager.Instance.Floors.First(), 100);
     }
 
-    public void Init(Floor lobbyFloor, int maxCapacity)
+    public void Init(
+        List<Floor> stoppableFloors,
+        Floor lobbyFloor,
+        int maxCapacity)
     {
+        StoppableFloors = stoppableFloors;
+        Passengers = new List<Passenger>();
+        CurrentDirection = ElevatorDirection.UNWARE;
         CurrentState = ElevatorState.IDLE;
-        MoveStartFloor = lobbyFloor;
         TargetFloor = lobbyFloor;
         _previousFloor = lobbyFloor;
         _maxCapacity = maxCapacity;
+
+        BoxScripts = new List<BoxScript>(gameObject.GetComponentsInChildren<BoxScript>());
+        foreach (var boxScript in BoxScripts)
+        {
+            if (boxScript.Idx > maxCapacity - 1)
+            {
+                boxScript.gameObject.SetActive(false);
+            }
+        }
     }
 
     public enum ElevatorState
@@ -63,19 +79,24 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateOnBoarding()
     {
+        Debug.Log($"Start onboarding {_previousFloor.FloorIdx}-{TargetFloor.FloorIdx}");
         // 에니메이션이나 뭐 하면될듯 ?
-        ElevatorDirection moveDirection =
-            Passengers.Count > 0 ? _previousFloor.DirectionTo(MoveStartFloor) : ElevatorDirection.UNWARE;
+        if (ElevatorManager.Instance.IsQueueEmpty(this) && Passengers.Count == 0)
+        {
+            CurrentDirection = ElevatorDirection.UNWARE;
+        }
+
         ElevatorArrivalEvent.Trigger(
-            MoveStartFloor,
-            _previousFloor,
+            TargetFloor,
             _maxCapacity - CurrentCapacity(),
-            moveDirection
+            CurrentDirection,
+            this
         );
 
         // n초 대기후 상태변경해주면 될듯합니다
         if (Passengers.Count == 0)
         {
+            Debug.Log($"onboarding makes to idle");
             CurrentState = ElevatorState.IDLE;
         }
         else
@@ -83,29 +104,21 @@ public class ElevatorController : MonoBehaviour
             // todo : passenger가 탄거니까 움직일 층 찾고 이동상태로 만들어야함.
             CurrentState = ElevatorState.MOVING;
             ElevatorManager.Instance.RouteElevator(this);
+            if (TargetFloor == _previousFloor)
+            {
+                Debug.Log($"noooo dont here");
+                ElevatorManager.Instance.RouteElevator(this);
+            }
         }
     }
 
-    public ElevatorDirection AfterDirection()
-    {
-        switch (CurrentState)
-        {
-            case ElevatorState.MOVING:
-                return MoveStartFloor.DirectionTo(TargetFloor);
-            case ElevatorState.IDLE:
-                return ElevatorDirection.UNWARE;
-            case ElevatorState.OFFBOARDING:
-            case ElevatorState.ONBOARDING:
-                return Passengers.Count > 0 ? _previousFloor.DirectionTo(MoveStartFloor) : ElevatorDirection.UNWARE;
-        }
-
-        return ElevatorDirection.UNWARE;
-    }
 
     private void UpdateOffBoarding()
     {
         // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
-        List<Passenger> exitWantPassengers = GetExitWantPassengers(MoveStartFloor);
+        Debug.Log($"Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx}");
+        _previousFloor = TargetFloor;
+        List<Passenger> exitWantPassengers = GetExitWantPassengers(_previousFloor);
         foreach (var passenger in exitWantPassengers)
         {
             Exit(passenger);
@@ -116,27 +129,32 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if (MoveStartFloor != TargetFloor)
+        List<Passenger> passengers = PassengerManager.Instance.GetPassengersOnFloor(_previousFloor);
+        if (passengers.Count(passenger => passenger.queuedElevator == this) != 0)
+        {
+            CurrentDirection = ElevatorDirection.UNWARE;
+            CurrentState = ElevatorState.ONBOARDING;
+        }
+
+        if (_previousFloor != TargetFloor)
         {
             CurrentState = ElevatorState.MOVING;
+            CurrentDirection = _previousFloor.DirectionTo(TargetFloor);
             Debug.Log("change to MOVING");
         }
     }
 
     private void UpdateMoving()
     {
-        ElevatorDirection direction = TargetFloor.transform.position.y > MoveStartFloor.transform.position.y
-            ? ElevatorDirection.Up
-            : ElevatorDirection.Down;
         float currentPosition = transform.position.y;
-        float startPosition = MoveStartFloor.transform.position.y;
+        float startPosition = _previousFloor.transform.position.y;
         float targetPosition = TargetFloor.transform.position.y;
-        float diff = direction.ToFloat() * _speed * Time.deltaTime;
+        float diff = CurrentDirection.ToFloat() * _speed * Time.deltaTime;
         float updatedPosition = currentPosition + diff;
 
         // 넘어가는거 보정
-        if ((direction == ElevatorDirection.Up && updatedPosition >= targetPosition) ||
-            (direction == ElevatorDirection.Down && updatedPosition <= targetPosition))
+        if ((CurrentDirection == ElevatorDirection.Up && updatedPosition >= targetPosition) ||
+            (CurrentDirection == ElevatorDirection.Down && updatedPosition <= targetPosition))
         {
             updatedPosition = targetPosition;
         }
@@ -157,8 +175,6 @@ public class ElevatorController : MonoBehaviour
         if (Math.Abs(currentPosition - targetPosition) < 0.01f)
         {
             updatedPosition = targetPosition;
-            _previousFloor = MoveStartFloor;
-            MoveStartFloor = TargetFloor;
             CurrentState = ElevatorState.OFFBOARDING;
         }
 
@@ -167,10 +183,41 @@ public class ElevatorController : MonoBehaviour
 
     public bool Enter(Passenger passenger)
     {
-        if (!CanEnterCapacity(passenger)) return false;
-        if (CurrentState != ElevatorState.ONBOARDING) return false;
+        if (!CanEnterCapacity(passenger))
+        {
+            Debug.Log(
+                $"enter fail because full capacity : ${passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
+            return false;
+        }
+
+        if (CurrentState != ElevatorState.ONBOARDING)
+        {
+            Debug.Log(
+                $"enter fail because not onboarding : ${passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
+            return false;
+        }
+
         passenger.inElevator = true;
+        if (Passengers.Count == 0)
+        {
+            CurrentDirection = passenger.StartFloor.DirectionTo(passenger.TargetFloor);
+        }
+
         Passengers.Add(passenger);
+        // todo : 사람 표시
+        foreach (var boxScript in BoxScripts)
+        {
+            if (!boxScript.IsEmpty())
+            {
+                continue;
+            }
+
+            boxScript.SetText(passenger.TargetFloor.FloorIdx.ToString());
+            break;
+        }
+
+        // 수정필요
+        Debug.Log($"enter passenger : ${passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
         ElevatorPassengerEnteredEvent.Trigger(passenger);
         return true;
     }
@@ -178,6 +225,18 @@ public class ElevatorController : MonoBehaviour
     private void Exit(Passenger passenger)
     {
         Passengers.Remove(passenger);
+        Debug.Log(
+            $"exit : {passenger.StartFloor.FloorIdx} -> {passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
+        // todo : 사람 표시 제거
+        foreach (var boxScript in BoxScripts)
+        {
+            if (boxScript.IsText(passenger.TargetFloor.FloorIdx.ToString()))
+            {
+                boxScript.MakeEmpty();
+                break;
+            }
+        }
+
         ElevatorPassengerExitEvent.Trigger(passenger);
     }
 
@@ -197,26 +256,25 @@ public class ElevatorController : MonoBehaviour
 
     public bool CanEnterCapacity(Passenger passenger)
     {
-        return RemainCapacity() > passenger.Weight;
+        return RemainCapacity() >= passenger.Weight;
     }
 
     public bool CanStop(Floor floor)
     {
-        ElevatorDirection currentMovingDirection = MoveStartFloor.DirectionTo(TargetFloor);
-        if (currentMovingDirection == ElevatorDirection.UNWARE)
+        if (CurrentState == ElevatorState.IDLE)
         {
-            Debug.Log("can stop check with unware");
+            // Debug.Log("can stop check with unware");
             return true;
         }
 
-        if (currentMovingDirection == ElevatorDirection.Up)
+        if (CurrentDirection == ElevatorDirection.Up)
         {
             if (floor.transform.position.y - transform.position.y > _decelerationThreshold)
                 return true;
             return false;
         }
 
-        if (currentMovingDirection == ElevatorDirection.Down)
+        if (CurrentDirection == ElevatorDirection.Down)
         {
             if (transform.position.y - floor.transform.position.y > _decelerationThreshold)
                 return true;
@@ -251,5 +309,15 @@ public class ElevatorController : MonoBehaviour
     public float DistanceFromHere(Floor floor)
     {
         return this.transform.position.y - floor.transform.position.y;
+    }
+
+    public bool IsStoppable(Floor floor)
+    {
+        return StoppableFloors.Contains(floor);
+    }
+
+    public bool IsStoppable(Floor from, Floor to)
+    {
+        return IsStoppable(from) && IsStoppable(to);
     }
 }

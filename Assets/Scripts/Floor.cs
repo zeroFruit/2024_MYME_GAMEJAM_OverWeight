@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -29,6 +30,7 @@ public class Floor : MonoBehaviour
             slot.Init(floorIdx, idx);
             Slots.Add(slot);
         }
+
         Passengers = new List<Passenger>();
         timer = Instantiate(floorTimer, transform);
         timer.Init();
@@ -69,14 +71,18 @@ public class Floor : MonoBehaviour
         return probability <= capacityOfPassengers;
     }
 
-    public List<Passenger> GetPassengersToOnboard(int remainWeight, ElevatorDirection afterDirection)
+    public List<Passenger> GetPassengersToOnboard(ElevatorController elevator, int remainWeight,
+        ElevatorDirection afterDirection)
     {
         int usedWeight = 0;
         List<Passenger> passengersToOnboard = new List<Passenger>();
         foreach (var passenger in Passengers)
         {
             ElevatorDirection passengerDirection = passenger.StartFloor.DirectionTo(passenger.TargetFloor);
-            // 지금 엘리베이터 방향과 같은 방향을 희망하는 승객 필터링
+            if (!elevator.IsStoppable(passenger.StartFloor, passenger.TargetFloor))
+            {
+                continue;
+            }
             if (afterDirection != ElevatorDirection.UNWARE && passengerDirection != afterDirection)
             {
                 continue;
@@ -85,6 +91,7 @@ public class Floor : MonoBehaviour
             if (usedWeight + passenger.Weight <= remainWeight)
             {
                 usedWeight += passenger.Weight;
+                afterDirection = passengerDirection; // 첫번째 사람으로 direction 고정
                 passengersToOnboard.Add(passenger);
             }
         }

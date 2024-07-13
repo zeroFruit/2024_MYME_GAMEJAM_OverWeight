@@ -19,7 +19,7 @@ public class Passenger : MonoBehaviour
     {
         StartFloor = floor;
         TargetFloor = FloorManager.Instance.GetRandomFloor(floor);
-        Weight = 20;
+        Weight = 1;
         isReadyToRide = false;
 
         maxX = 0.2f;

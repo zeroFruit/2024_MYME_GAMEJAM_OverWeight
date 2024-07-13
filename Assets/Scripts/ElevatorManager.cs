@@ -8,12 +8,24 @@ using UnityEngine.EventSystems;
 public class ElevatorManager : Singleton<ElevatorManager>, EventListener<ElevatorRestingEvent>
 {
     private List<ElevatorController> _elevators = new List<ElevatorController>();
+    public GameObject ElevatorPrefab;
 
     public void Init()
     {
-        // test용
-        ElevatorController elevatorController = GameObject.Find("elevator").GetComponent<ElevatorController>();
-        _elevators.Add(elevatorController);
+        GameObject ev1 = Instantiate(ElevatorPrefab);
+        GameObject ev2 = Instantiate(ElevatorPrefab);
+        ev1.transform.position = new Vector2(11, -15);
+        ev2.transform.position = new Vector2(18, -15);
+        ElevatorController elevator1 = ev1.GetComponent<ElevatorController>();
+        ElevatorController elevator2 = ev2.GetComponent<ElevatorController>();
+        elevator1.Init(
+            FloorManager.Instance.Floors,
+            FloorManager.Instance.Floors.First(), 6);
+        List<Floor> testFloors = FloorManager.Instance.Floors.Where(floor => floor.FloorIdx > 8).ToList();
+        testFloors.Add(FloorManager.Instance.Floors.First());
+        elevator2.Init(testFloors, FloorManager.Instance.Floors.First(), 6);
+        _elevators.Add(elevator1);
+        _elevators.Add(elevator2);
         // todo : elevator 추가
     }
 
@@ -30,6 +42,29 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             if (!queuedPassenger.queuedElevator.CanEnterCapacity(queuedPassenger))
             {
                 queuedPassenger.queuedElevator = null;
+                continue;
+            }
+
+            if (queuedPassenger.queuedElevator.CurrentDirection != ElevatorDirection.UNWARE &&
+                queuedPassenger.queuedElevator.CurrentDirection !=
+                queuedPassenger.StartFloor.DirectionTo(queuedPassenger.TargetFloor))
+            {
+                queuedPassenger.queuedElevator = null;
+                continue;
+            }
+
+            if (queuedPassenger.queuedElevator.CurrentDirection == ElevatorDirection.Up &&
+                queuedPassenger.queuedElevator.DistanceFromHere(queuedPassenger.StartFloor) > 0)
+            {
+                queuedPassenger.queuedElevator = null;
+                continue;
+            }
+
+            if (queuedPassenger.queuedElevator.CurrentDirection == ElevatorDirection.Down &&
+                queuedPassenger.queuedElevator.DistanceFromHere(queuedPassenger.StartFloor) < 0)
+            {
+                queuedPassenger.queuedElevator = null;
+                continue;
             }
         }
 
@@ -43,7 +78,8 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             {
                 if (ev.CurrentState != ElevatorController.ElevatorState.MOVING)
                     continue;
-                if (ev.CanStop(unQueuedPassenger.StartFloor) && !ev.IsFull())
+                if (ev.CanStop(unQueuedPassenger.StartFloor) && !ev.IsFull() &&
+                    ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
                 {
                     selectedElevator = ev;
                     break;
@@ -61,7 +97,7 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             {
                 if (ev.CurrentState != ElevatorController.ElevatorState.IDLE)
                     continue;
-                if (!ev.IsFull())
+                if (!ev.IsFull() && ev.CurrentDirection == ElevatorDirection.UNWARE && ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
                 {
                     selectedElevator = ev;
                     break;
@@ -77,7 +113,9 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             // 2.3 그마저도없으면 ON/OFF BOARDING 방향같은 엘레베이터에 QUEUE
             foreach (var ev in _elevators)
             {
-                if (ev.CanStop(unQueuedPassenger.StartFloor) && !ev.IsFull())
+                ElevatorDirection unQueuedDirection =
+                    unQueuedPassenger.StartFloor.DirectionTo(unQueuedPassenger.TargetFloor);
+                if (ev.CurrentDirection == unQueuedDirection && ev.CanStop(unQueuedPassenger.StartFloor)&&ev.IsStoppable(unQueuedPassenger.StartFloor, unQueuedPassenger.TargetFloor))
                 {
                     selectedElevator = ev;
                     break;
@@ -106,61 +144,99 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
         List<Passenger> inElevatorPassengers = ev.Passengers.ToList();
         queuedPassengers.Sort((p1, p2) =>
         {
-            float yDiff1 = ev.transform.position.y - p1.StartFloor.transform.position.y;
-            float yDiff2 = ev.transform.position.y - p2.StartFloor.transform.position.y;
-            if (ev.MoveStartFloor.DirectionTo(ev.TargetFloor) == ElevatorDirection.Down)
+            if (ev.CurrentDirection == ElevatorDirection.Up)
             {
-                yDiff1 = -yDiff1;
-                yDiff2 = -yDiff2;
+                float yDiff1 = p1.StartFloor.transform.position.y - ev.transform.position.y;
+                float yDiff2 = p2.StartFloor.transform.position.y - ev.transform.position.y;
+                if (yDiff1 < 0) yDiff1 = 999999; // todo : something big
+                if (yDiff2 < 0) yDiff2 = 999999; // todo : something big
+                return yDiff1.CompareTo(yDiff2);
             }
-
-            return yDiff1.CompareTo(yDiff2);
+            else if (ev.CurrentDirection == ElevatorDirection.Down)
+            {
+                float yDiff1 = ev.transform.position.y - p1.StartFloor.transform.position.y;
+                float yDiff2 = ev.transform.position.y - p2.StartFloor.transform.position.y;
+                if (yDiff1 < 0) yDiff1 = 999999; // todo : something big
+                if (yDiff2 < 0) yDiff2 = 999999; // todo : something big
+                return yDiff1.CompareTo(yDiff2);
+            }
+            else
+            {
+                float yDiff1 = Math.Abs(p1.StartFloor.transform.position.y - ev.transform.position.y);
+                float yDiff2 = Math.Abs(p2.StartFloor.transform.position.y - ev.transform.position.y);
+                return yDiff1.CompareTo(yDiff2);
+            }
         });
 
         inElevatorPassengers.Sort((p1, p2) =>
         {
-            if (ev.MoveStartFloor.DirectionTo(ev.TargetFloor) == ElevatorDirection.Down)
+            if (ev.CurrentDirection == ElevatorDirection.Up)
+            {
+                return p1.TargetFloor.FloorIdx.CompareTo(p2.TargetFloor.FloorIdx);
+            }
+            else if (ev.CurrentDirection == ElevatorDirection.Down)
             {
                 return p2.TargetFloor.FloorIdx.CompareTo(p1.TargetFloor.FloorIdx);
             }
             else
             {
+                Debug.Log("어라 여기오면 안되는데..  in elevator sort");
                 return p1.TargetFloor.FloorIdx.CompareTo(p2.TargetFloor.FloorIdx);
             }
         });
 
 
-        Passenger nearestQueuedPassenger = queuedPassengers.FirstOrDefault();
-        Passenger nearestInElevatorPassenger = inElevatorPassengers.FirstOrDefault();
+        Passenger nearestQueuedPassenger =
+            queuedPassengers.FirstOrDefault();
+        Passenger nearestInElevatorPassenger =
+            inElevatorPassengers.FirstOrDefault();
 
         if (nearestQueuedPassenger != null && nearestInElevatorPassenger != null)
         {
             if (Math.Abs(ev.DistanceFromHere(nearestQueuedPassenger.StartFloor)) >
-                Math.Abs(ev.DistanceFromHere(nearestInElevatorPassenger.TargetFloor)) &&
-                ev.CanStop(nearestInElevatorPassenger.TargetFloor))
+                Math.Abs(ev.DistanceFromHere(nearestInElevatorPassenger.TargetFloor)))
             {
-                ev.TargetFloor = nearestInElevatorPassenger.TargetFloor;
+                if (ev.TargetFloor != nearestInElevatorPassenger.TargetFloor)
+                {
+                    Debug.Log(
+                        $"Target changed from1 {ev.TargetFloor.FloorIdx} -> {nearestInElevatorPassenger.TargetFloor}");
+                    ev.TargetFloor = nearestInElevatorPassenger.TargetFloor;
+                }
             }
             else if (Math.Abs(ev.DistanceFromHere(nearestQueuedPassenger.StartFloor)) <
-                     Math.Abs(ev.DistanceFromHere(nearestInElevatorPassenger.TargetFloor)) &&
-                     ev.CanStop(nearestQueuedPassenger.StartFloor))
+                     Math.Abs(ev.DistanceFromHere(nearestInElevatorPassenger.TargetFloor)))
             {
-                ev.TargetFloor = nearestInElevatorPassenger.TargetFloor;
+                if (ev.TargetFloor != nearestQueuedPassenger.StartFloor)
+                {
+                    Debug.Log($"Target changed from2 {ev.TargetFloor.FloorIdx} -> {nearestQueuedPassenger.StartFloor}");
+                    ev.TargetFloor = nearestQueuedPassenger.StartFloor;
+                }
+            }
+            else
+            {
+                if (ev.TargetFloor != nearestQueuedPassenger.StartFloor)
+                {
+                    Debug.Log($"Target changed from3 {ev.TargetFloor.FloorIdx} -> {nearestQueuedPassenger.StartFloor}");
+                    ev.TargetFloor = nearestQueuedPassenger.StartFloor;
+                }
             }
         }
 
         if (nearestQueuedPassenger != null && nearestInElevatorPassenger == null)
         {
-            if (ev.CanStop(nearestQueuedPassenger.StartFloor))
+            if (ev.TargetFloor != nearestQueuedPassenger.StartFloor)
             {
+                Debug.Log($"Target changed from4 {ev.TargetFloor.FloorIdx} -> {nearestQueuedPassenger.StartFloor}");
                 ev.TargetFloor = nearestQueuedPassenger.StartFloor;
             }
         }
 
         if (nearestQueuedPassenger == null && nearestInElevatorPassenger != null)
         {
-            if (ev.CanStop(nearestInElevatorPassenger.TargetFloor))
+            if (ev.TargetFloor != nearestInElevatorPassenger.TargetFloor)
             {
+                Debug.Log(
+                    $"Target changed from5 {ev.TargetFloor.FloorIdx} -> {nearestInElevatorPassenger.TargetFloor}");
                 ev.TargetFloor = nearestInElevatorPassenger.TargetFloor;
             }
         }
@@ -184,12 +260,18 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
         foreach (var elevator in _elevators)
         {
             if (
-                elevator.MoveStartFloor == floor &&
+                elevator._previousFloor == floor &&
                 elevator.CurrentState == ElevatorController.ElevatorState.ONBOARDING &&
-                (elevator.AfterDirection() == ElevatorDirection.UNWARE || elevator.AfterDirection() == dir)
+                (elevator.CurrentDirection == ElevatorDirection.UNWARE || elevator.CurrentDirection == dir)
             )
                 return elevator;
         }
+
+        if (true)
+        {
+            Debug.Log("HERE");
+        }
+
 
         return null;
     }
@@ -202,8 +284,8 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
             return;
         waitingPassengers.Sort((p1, p2) =>
         {
-            int diff1 = Math.Abs(p1.StartFloor.FloorIdx - e.Elevator.MoveStartFloor.FloorIdx);
-            int diff2 = Math.Abs(p2.StartFloor.FloorIdx - e.Elevator.MoveStartFloor.FloorIdx);
+            int diff1 = Math.Abs(p1.StartFloor.FloorIdx - e.Elevator._previousFloor.FloorIdx);
+            int diff2 = Math.Abs(p2.StartFloor.FloorIdx - e.Elevator._previousFloor.FloorIdx);
             return diff1.CompareTo(diff2);
         });
         Passenger nearestPassenger = waitingPassengers.First();
@@ -228,5 +310,10 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
     void SpawnButton()
     {
         Debug.Log("HEREEREERRE");
+    }
+
+    public bool IsQueueEmpty(ElevatorController ev)
+    {
+        return PassengerManager.Instance.GetQueuedPassengers(ev).Count == 0;
     }
 }

@@ -32,6 +32,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         for (int idx = 0; idx < day; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
+            floor.name += $"{idx}";
             floor.Init(slotPrefab, idx, FloorTimerPrefab);
             Floors.Add(floor.GetComponent<Floor>());
         }
@@ -57,7 +58,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     public void OnEvent(ElevatorArrivalEvent e)
     {
-        List<Passenger> passengersToOnboard = e.ArrivalFloor.GetPassengersToOnboard(e.RemainWeight, e.AfterDirection);
+        List<Passenger> passengersToOnboard = e.ArrivalFloor.GetPassengersToOnboard(e.Elevator,e.RemainWeight, e.AfterDirection);
         foreach (Passenger passenger in passengersToOnboard)
         {
             ElevatorManager.Instance.Enter(passenger);
