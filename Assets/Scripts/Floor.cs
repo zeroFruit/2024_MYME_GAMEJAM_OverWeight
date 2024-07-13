@@ -50,8 +50,12 @@ public class Floor : MonoBehaviour
                 Passenger newPassenger = PassengerManager.Instance.Spawn(this);
                 newPassenger.transform.SetParent(getEmptySlot().transform);
                 Passengers.Add(newPassenger);
+                // test @roy
+                newPassenger.StartFloor = this;
+                newPassenger.TargetFloor = FloorManager.Instance.GetRandomFloor(this);
             }
         }
+        
     }
 
     private Slot getEmptySlot()
@@ -67,21 +71,40 @@ public class Floor : MonoBehaviour
 
     public List<Passenger> GetPassengersToOnboard(int remainWeight, ElevatorDirection afterDirection)
     {
-        throw new NotImplementedException();
+        int usedWeight = 0;
+        List<Passenger> passengersToOnboard = new List<Passenger>();
+        foreach (var passenger in Passengers)
+        {
+            ElevatorDirection passengerDirection = passenger.StartFloor.DirectionTo(passenger.TargetFloor);
+            if (afterDirection != ElevatorDirection.UNWARE && passengerDirection != afterDirection)
+            {
+                continue;
+            }
+
+            if (usedWeight + passenger.Weight < remainWeight)
+            {
+                usedWeight += passenger.Weight;
+                passengersToOnboard.Add(passenger);
+            }
+        }
+
+        return passengersToOnboard;
     }
 
     public void OnboardPassenger(Passenger passenger)
     {
-        
+        // todo impl
+        Passengers.Remove(passenger);
     }
 
-    public static ElevatorDirection operator -(Floor from, Floor to)
+    public ElevatorDirection DirectionTo(Floor to)
     {
-        if (from.FloorIdx > to.FloorIdx)
+        if (FloorIdx > to.FloorIdx)
         {
             return ElevatorDirection.Down;
         }
-        else if (from.FloorIdx < to.FloorIdx)
+
+        if (FloorIdx < to.FloorIdx)
 
         {
             return ElevatorDirection.Up;
@@ -89,6 +112,7 @@ public class Floor : MonoBehaviour
 
         return ElevatorDirection.UNWARE;
     }
+
 
     public static bool operator >(Floor left, Floor right)
     {

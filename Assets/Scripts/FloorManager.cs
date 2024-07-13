@@ -68,4 +68,26 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         Floor floor = e.Passenger.StartFloor;
         floor.OnboardPassenger(e.Passenger);
     }
+
+    public Floor GetRandomFloor(Floor without)
+    {
+        Floor selected = without;
+        while (selected == without)
+        {
+            selected = _floors[Random.Range(0, _floors.Count)];
+        }
+
+        return selected;
+    }
+    void OnEnable()
+    {
+        this.StartListeningEvent<ElevatorArrivalEvent>();
+        this.StartListeningEvent<ElevatorPassengerEnteredEvent>();
+    }
+
+    void OnDisable()
+    {
+        this.StopListeningEvent<ElevatorArrivalEvent>();
+        this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
+    }
 }

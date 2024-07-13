@@ -11,6 +11,10 @@ public class Passenger : MonoBehaviour
     public float maxX;
     public float movingSpeed;
     
+    public DateTime SpawnedAt;
+    public bool inElevator;
+    public ElevatorController queuedElevator;
+    
     public void Init()
     {
         Weight = 20;

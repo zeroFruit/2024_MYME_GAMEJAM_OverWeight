@@ -7,30 +7,30 @@ using UnityEngine.Serialization;
 
 public class ElevatorController : MonoBehaviour
 {
-    private float _speed = 3.0f;
-    private float _accelerationThreshold = 1f;
-    private float _decelerationThreshold = 1f;
-    private int _maxWeight;
-    public List<Passenger> Passengers { get; private set; } = new List<Passenger>();
+    public float _speed = 3.0f;
+    public float _accelerationThreshold = 1f;
+    public float _decelerationThreshold = 1f;
+    public int _maxCapacity;
+    public List<Passenger> Passengers;
     public Floor TargetFloor { get; set; }
-    public Floor CurrentFloor { get; private set; }
-    private Floor _previousFloor;
+    public Floor MoveStartFloor { get; private set; }
+    public Floor _previousFloor;
     public ElevatorState CurrentState { get; private set; }
 
     private void Awake()
     {
         // for test
+        Passengers = new List<Passenger>();
         Init(GameObject.Find("Floor_0").GetComponent<Floor>(), 100);
-        TargetFloor = GameObject.Find("Floor_3").GetComponent<Floor>();
     }
 
-    public void Init(Floor lobbyFloor, int maxWeight)
+    public void Init(Floor lobbyFloor, int maxCapacity)
     {
         CurrentState = ElevatorState.IDLE;
-        CurrentFloor = lobbyFloor;
+        MoveStartFloor = lobbyFloor;
         TargetFloor = lobbyFloor;
         _previousFloor = lobbyFloor;
-        _maxWeight = maxWeight;
+        _maxCapacity = maxCapacity;
     }
 
     public enum ElevatorState
@@ -64,14 +64,15 @@ public class ElevatorController : MonoBehaviour
     {
         // 에니메이션이나 뭐 하면될듯 ?
         ElevatorDirection moveDirection =
-            Passengers.Count > 0 ? _previousFloor - CurrentFloor : ElevatorDirection.UNWARE;
+            Passengers.Count > 0 ? _previousFloor.DirectionTo(MoveStartFloor) : ElevatorDirection.UNWARE;
         ElevatorArrivalEvent.Trigger(
-            CurrentFloor,
+            MoveStartFloor,
             _previousFloor,
-            _maxWeight - GetCurrentWeight(),
+            _maxCapacity - CurrentCapacity(),
             moveDirection
         );
 
+        // n초 대기후 상태변경해주면 될듯합니다
         if (Passengers.Count == 0)
         {
             CurrentState = ElevatorState.IDLE;
@@ -79,8 +80,8 @@ public class ElevatorController : MonoBehaviour
         else
         {
             // todo : passenger가 탄거니까 움직일 층 찾고 이동상태로 만들어야함.
-            ElevatorManager.Instance.routeElevator(this, moveDirection);
             CurrentState = ElevatorState.MOVING;
+            ElevatorManager.Instance.RouteElevator(this);
         }
     }
 
@@ -89,12 +90,12 @@ public class ElevatorController : MonoBehaviour
         switch (CurrentState)
         {
             case ElevatorState.MOVING:
-                return TargetFloor - CurrentFloor;
+                return MoveStartFloor.DirectionTo(TargetFloor);
             case ElevatorState.IDLE:
                 return ElevatorDirection.UNWARE;
             case ElevatorState.OFFBOARDING:
             case ElevatorState.ONBOARDING:
-                return Passengers.Count > 0 ? _previousFloor - CurrentFloor : ElevatorDirection.UNWARE;
+                return Passengers.Count > 0 ? _previousFloor.DirectionTo(MoveStartFloor) : ElevatorDirection.UNWARE;
         }
 
         return ElevatorDirection.UNWARE;
@@ -102,8 +103,8 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateOffBoarding()
     {
-        // 에니메이션이나 뭐 하면될듯 ?
-        List<Passenger> exitWantPassengers = GetExitWantPassengers(CurrentFloor);
+        // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
+        List<Passenger> exitWantPassengers = GetExitWantPassengers(MoveStartFloor);
         foreach (var passenger in exitWantPassengers)
         {
             Exit(passenger);
@@ -114,7 +115,7 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateIdle()
     {
-        if (CurrentFloor != TargetFloor)
+        if (MoveStartFloor != TargetFloor)
         {
             CurrentState = ElevatorState.MOVING;
             Debug.Log("change to MOVING");
@@ -123,11 +124,11 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateMoving()
     {
-        ElevatorDirection direction = TargetFloor.transform.position.y > CurrentFloor.transform.position.y
+        ElevatorDirection direction = TargetFloor.transform.position.y > MoveStartFloor.transform.position.y
             ? ElevatorDirection.Up
             : ElevatorDirection.Down;
         float currentPosition = transform.position.y;
-        float startPosition = CurrentFloor.transform.position.y;
+        float startPosition = MoveStartFloor.transform.position.y;
         float targetPosition = TargetFloor.transform.position.y;
         float diff = direction.ToFloat() * _speed * Time.deltaTime;
         float updatedPosition = currentPosition + diff;
@@ -136,7 +137,6 @@ public class ElevatorController : MonoBehaviour
         if ((direction == ElevatorDirection.Up && updatedPosition >= targetPosition) ||
             (direction == ElevatorDirection.Down && updatedPosition <= targetPosition))
         {
-            Debug.Log("보정");
             updatedPosition = targetPosition;
         }
 
@@ -144,28 +144,20 @@ public class ElevatorController : MonoBehaviour
         // _elevatorState = ElevatorState.IDLE;
         if (Math.Abs(currentPosition - startPosition) < _accelerationThreshold)
         {
-            Debug.Log(Math.Abs(currentPosition - startPosition));
-            Debug.Log(_accelerationThreshold);
-            Debug.Log("accelation Threshold!");
             float lerpRatio = Math.Max(0.01f, Math.Abs(currentPosition - startPosition) / _accelerationThreshold);
             updatedPosition = Mathf.Lerp(currentPosition, updatedPosition, lerpRatio);
         }
         else if (Math.Abs(currentPosition - targetPosition) < _decelerationThreshold)
         {
-            Debug.Log("decelation Threshold!");
             float lerpRatio = Math.Max(0.01f, Math.Abs(currentPosition - targetPosition) / _decelerationThreshold);
             updatedPosition = Mathf.Lerp(currentPosition, updatedPosition, lerpRatio);
-        }
-        else
-        {
-            Debug.Log("just moving!");
         }
 
         if (Math.Abs(currentPosition - targetPosition) < 0.01f)
         {
             updatedPosition = targetPosition;
-            _previousFloor = CurrentFloor;
-            CurrentFloor = TargetFloor;
+            _previousFloor = MoveStartFloor;
+            MoveStartFloor = TargetFloor;
             CurrentState = ElevatorState.OFFBOARDING;
         }
 
@@ -174,7 +166,9 @@ public class ElevatorController : MonoBehaviour
 
     public bool Enter(Passenger passenger)
     {
-        if (!CanEnter(passenger)) return false;
+        if (!CanEnterCapacity(passenger)) return false;
+        if (CurrentState != ElevatorState.ONBOARDING) return false;
+        passenger.inElevator = true;
         Passengers.Add(passenger);
         ElevatorPassengerEnteredEvent.Trigger(passenger);
         return true;
@@ -200,13 +194,44 @@ public class ElevatorController : MonoBehaviour
         return exitWantPassengers;
     }
 
-    public bool CanEnter(Passenger passenger)
+    public bool CanEnterCapacity(Passenger passenger)
     {
-        int remainWeight = _maxWeight - GetCurrentWeight();
-        return remainWeight > passenger.Weight;
+        return RemainCapacity() > passenger.Weight;
     }
 
-    public int GetCurrentWeight()
+    public bool CanStop(Floor floor)
+    {
+        ElevatorDirection currentMovingDirection = MoveStartFloor.DirectionTo(TargetFloor);
+        if (currentMovingDirection == ElevatorDirection.UNWARE)
+        {
+            Debug.Log("can stop check with unware");
+            return true;
+        }
+
+        if (currentMovingDirection == ElevatorDirection.Up)
+        {
+            if (floor.transform.position.y - transform.position.y > _decelerationThreshold)
+                return true;
+            return false;
+        }
+
+        if (currentMovingDirection == ElevatorDirection.Down)
+        {
+            if (transform.position.y - floor.transform.position.y > _decelerationThreshold)
+                return true;
+            return false;
+        }
+
+        Debug.Log("why can stop check here?");
+        return false;
+    }
+
+    public bool IsFull()
+    {
+        return CurrentCapacity() == _maxCapacity;
+    }
+
+    public int CurrentCapacity()
     {
         int totalWeight = 0;
         foreach (var passenger in Passengers)
@@ -215,5 +240,15 @@ public class ElevatorController : MonoBehaviour
         }
 
         return totalWeight;
+    }
+
+    public int RemainCapacity()
+    {
+        return _maxCapacity - CurrentCapacity();
+    }
+
+    public float DistanceFromHere(Floor floor)
+    {
+        return this.transform.position.y - floor.transform.position.y;
     }
 }
