@@ -1,37 +1,38 @@
 using System.Collections.Generic;
 using SSR.OverWeight;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PassengerManager : Singleton<PassengerManager>, EventListener<ElevatorPassengerEnteredEvent>
 {
-    private List<Passenger> _passengers;
+    public List<Passenger> Passengers;
 
     public Passenger passengerPrefab;
 
     protected override void Awake()
     {
         base.Awake();
-        _passengers = new List<Passenger>();
+        Passengers = new List<Passenger>();
     }
 
     public Passenger Spawn(Floor floor)
     {
         Passenger spawned = Instantiate(passengerPrefab);
-        spawned.Init();
-        _passengers.Add(spawned);
+        spawned.Init(floor);
+        Passengers.Add(spawned);
         return spawned;
     }
 
     void Despawn(Passenger passenger)
     {
-        _passengers.Remove(passenger);
+        Passengers.Remove(passenger);
         passenger.gameObject.SetActive(false);
     }
 
     public List<Passenger> GetPassengersOnFloor(Floor floor)
     {
         List<Passenger> result = new List<Passenger>();
-        foreach (var passenger in _passengers)
+        foreach (var passenger in Passengers)
         {
             if (floor == passenger.StartFloor)
             {
@@ -44,6 +45,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
 
     public void OnEvent(ElevatorPassengerEnteredEvent e)
     {
+        Passengers.Remove(e.Passenger);
         e.Passenger.gameObject.SetActive(false);
     }
 
@@ -55,7 +57,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     public List<Passenger> GetAllPassengers()
     {
         List<Passenger> passengers = new List<Passenger>();
-        foreach (var passenger in _passengers)
+        foreach (var passenger in Passengers)
         {
             passengers.Add(passenger);
         }
@@ -66,7 +68,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     public List<Passenger> GetUnQueuedPassengers()
     {
         List<Passenger> passengers = new List<Passenger>();
-        foreach (var passenger in _passengers)
+        foreach (var passenger in Passengers)
         {
             if (!passenger.inElevator && passenger.queuedElevator == null)
             {
@@ -80,7 +82,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     public List<Passenger> GetQueuedPassengers()
     {
         List<Passenger> passengers = new List<Passenger>();
-        foreach (var passenger in _passengers)
+        foreach (var passenger in Passengers)
         {
             if (!passenger.inElevator && passenger.queuedElevator != null)
             {
@@ -94,7 +96,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     public List<Passenger> GetQueuedPassengers(ElevatorController ev)
     {
         List<Passenger> passengers = new List<Passenger>();
-        foreach (var passenger in _passengers)
+        foreach (var passenger in Passengers)
         {
             if (!passenger.inElevator && passenger.queuedElevator == ev)
             {

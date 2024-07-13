@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using SSR.OverWeight;
 using Unity.Mathematics;
 using UnityEngine;
@@ -89,5 +90,12 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         this.StopListeningEvent<ElevatorArrivalEvent>();
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
+    }
+    
+    [InspectorButton("TestRemovePassenger")] public bool TestRemovePassengerButton;
+
+    void TestRemovePassenger()
+    {
+        ElevatorPassengerEnteredEvent.Trigger(PassengerManager.Instance.Passengers.First());
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,7 @@ public class Floor : MonoBehaviour
     public int spawnProbability;
     public List<Slot> Slots;
     public List<Passenger> Passengers;
-    
+
     public void Init(Slot slotPrefab, int floorIdx)
     {
         FloorIdx = floorIdx;
@@ -26,6 +27,7 @@ public class Floor : MonoBehaviour
             slot.Init(floorIdx, idx);
             Slots.Add(slot);
         }
+
         Passengers = new List<Passenger>();
     }
 
@@ -55,7 +57,6 @@ public class Floor : MonoBehaviour
                 newPassenger.TargetFloor = FloorManager.Instance.GetRandomFloor(this);
             }
         }
-        
     }
 
     private Slot getEmptySlot()
@@ -76,12 +77,13 @@ public class Floor : MonoBehaviour
         foreach (var passenger in Passengers)
         {
             ElevatorDirection passengerDirection = passenger.StartFloor.DirectionTo(passenger.TargetFloor);
+            // 지금 엘리베이터 방향과 같은 방향을 희망하는 승객 필터링
             if (afterDirection != ElevatorDirection.UNWARE && passengerDirection != afterDirection)
             {
                 continue;
             }
 
-            if (usedWeight + passenger.Weight < remainWeight)
+            if (usedWeight + passenger.Weight <= remainWeight)
             {
                 usedWeight += passenger.Weight;
                 passengersToOnboard.Add(passenger);
@@ -93,8 +95,26 @@ public class Floor : MonoBehaviour
 
     public void OnboardPassenger(Passenger passenger)
     {
-        // todo impl
         Passengers.Remove(passenger);
+        // 승객 줄 당기기
+        RearrangePassengers();
+    }
+
+    private void RearrangePassengers()
+    {
+        foreach (var slot in Slots)
+        {
+            Passenger child = slot.GetComponentInChildren<Passenger>();
+            if (child != null)
+            {
+                slot.GetComponentInChildren<Passenger>().transform.SetParent(null);
+            }
+        }
+
+        for (int idx = 0; idx < Passengers.Count; idx++)
+        {
+            Passengers[idx].transform.SetParent(Slots[idx].transform);
+        }
     }
 
     public ElevatorDirection DirectionTo(Floor to)

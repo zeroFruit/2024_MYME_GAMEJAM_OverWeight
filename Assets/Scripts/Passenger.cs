@@ -5,22 +5,28 @@ public class Passenger : MonoBehaviour
 {
     public Floor StartFloor;
     public Floor TargetFloor;
-    public int Weight; // 무게
+    public int Weight; // 비중
     public bool isReadyToRide;
-    
+
     public float maxX;
     public float movingSpeed;
-    
+
     public DateTime SpawnedAt;
     public bool inElevator;
     public ElevatorController queuedElevator;
-    
-    public void Init()
+
+    public void Init(Floor floor)
     {
+        StartFloor = floor;
+        TargetFloor = FloorManager.Instance.GetRandomFloor(floor);
         Weight = 20;
         isReadyToRide = false;
+
         maxX = 0.3f;
         movingSpeed = 1;
+
+        SpawnedAt = DateTime.Now;
+        inElevator = false;
     }
 
     private void Start()
@@ -38,6 +44,7 @@ public class Passenger : MonoBehaviour
             isReadyToRide = true;
             return;
         }
+
         transform.localPosition = new Vector3(nextPosX, curPos.y, curPos.z);
     }
 }
