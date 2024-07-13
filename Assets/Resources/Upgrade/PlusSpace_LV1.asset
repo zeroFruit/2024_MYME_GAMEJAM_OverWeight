@@ -20,6 +20,6 @@ MonoBehaviour:
   Cost: 800
   Level: 1
   EmptyWeight: 1.5
-  MaxCapacity: 0
+  MaxCapacity: 8
   AdditionalMaxSpeed: 0
   AdditionalSaveCost: 0

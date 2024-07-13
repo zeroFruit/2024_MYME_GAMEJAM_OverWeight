@@ -357,7 +357,7 @@ public class ElevatorController : MonoBehaviour
     public void ChangeCapacity(int maxCapacity)
     {
         _maxCapacity = maxCapacity;
-        BoxScripts = new List<BoxScript>(gameObject.GetComponentsInChildren<BoxScript>());
+        BoxScripts = new List<BoxScript>(gameObject.GetComponentsInChildren<BoxScript>(true));
         foreach (var boxScript in BoxScripts)
         {
             if (boxScript.Idx > maxCapacity - 1)

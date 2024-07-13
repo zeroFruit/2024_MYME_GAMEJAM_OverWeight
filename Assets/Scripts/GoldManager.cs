@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleUpEvent>
 {
-    public int CurrentGold = 5000;
+    public int CurrentGold = 1000;
 
     public float GoldPerSpeed = 1;
     public GameObject IncomeTextPrefab;
