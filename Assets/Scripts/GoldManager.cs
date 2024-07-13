@@ -45,7 +45,7 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
         {
             GameObject minusObj = Instantiate(OutcomeTextPrefab);
             minusObj.transform.position =
-                new Vector3(e.Elevator.transform.position.x, e.Elevator.transform.position.y + 0.4f, -9);
+                new Vector3(e.Elevator.transform.position.x+2f, e.Elevator.transform.position.y + 1.5f, -9);
             minusObj.GetComponent<IncomeScript>().Message = "-" + minusAffectedGold;
         }
 

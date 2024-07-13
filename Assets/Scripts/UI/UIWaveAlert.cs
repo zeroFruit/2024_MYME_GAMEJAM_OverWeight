@@ -21,7 +21,7 @@ public class UIWaveAlert : UIPanel,
     public void Show(WaveType _currentWave)
     {
         this.WaveNameText.text = this._texts[_currentWave];
-        this.Show(null);
+        this.AlertFeedback.PlayFeedbacks();
     }
     
     public override void Show(Transform character)

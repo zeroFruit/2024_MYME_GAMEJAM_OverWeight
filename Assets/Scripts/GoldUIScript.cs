@@ -15,6 +15,13 @@ public class GoldUIScript : MonoBehaviour, EventListener<GoldChangedEvent>
     public void OnEvent(GoldChangedEvent e)
     {
         GoldText.text = e.To.ToString();
+        
+        // @roy 이거 옮겨야함 ㅋㅋ
+        if (e.To < 0)
+        {
+            GameOverEvent.Trigger();
+        }
+
     }
 
     void OnEnable()
