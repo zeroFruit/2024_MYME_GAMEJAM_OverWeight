@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ElevatorManager : Singleton<ElevatorManager>, EventListener<ElevatorRestingEvent>
 {
-    private List<ElevatorController> _elevators = new List<ElevatorController>();
+    public List<ElevatorController> _elevators = new List<ElevatorController>();
     public GameObject ElevatorPrefab;
 
     public void Init()

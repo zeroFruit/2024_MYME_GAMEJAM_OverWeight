@@ -43,6 +43,18 @@ public class UIPanelElevatorSetting : UIPanel
 
     #endregion
     
-    
+
+    void Update() {
+        var elevators = ElevatorManager.Instance._elevators;
+        for (int i = 0; i < 3; i++)
+        {
+            if (i >= elevators.Count)
+            {
+                elevatorSettingUIs[i].gameObject.SetActive(false);
+                continue;
+            }
+            elevatorSettingUIs[i].gameObject.SetActive(true);
+        }
+    }
     
 }
