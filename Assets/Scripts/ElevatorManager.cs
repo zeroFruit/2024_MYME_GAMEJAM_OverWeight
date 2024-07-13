@@ -12,20 +12,26 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
 
     public void Init()
     {
+        float floorY = FloorManager.Instance.Floors.First().transform.position.y;
         GameObject ev1 = Instantiate(ElevatorPrefab);
         GameObject ev2 = Instantiate(ElevatorPrefab);
-        ev1.transform.position = new Vector2(11, -15);
-        ev2.transform.position = new Vector2(18, -15);
+        GameObject ev3 = Instantiate(ElevatorPrefab);
+        ev1.transform.position = new Vector2(11, floorY);
+        ev2.transform.position = new Vector2(16.5f, floorY);
+        ev3.transform.position = new Vector2(22, floorY);
         ElevatorController elevator1 = ev1.GetComponent<ElevatorController>();
         ElevatorController elevator2 = ev2.GetComponent<ElevatorController>();
+        ElevatorController elevator3 = ev3.GetComponent<ElevatorController>();
         elevator1.Init(
             FloorManager.Instance.Floors,
             FloorManager.Instance.Floors.First(), 6);
-        List<Floor> testFloors = FloorManager.Instance.Floors.Where(floor => floor.FloorIdx > 8).ToList();
+        List<Floor> testFloors = FloorManager.Instance.Floors.Where(floor => floor.FloorIdx > 5).ToList();
         testFloors.Add(FloorManager.Instance.Floors.First());
         elevator2.Init(testFloors, FloorManager.Instance.Floors.First(), 6);
+        elevator3.Init(testFloors, FloorManager.Instance.Floors.First(), 6);
         _elevators.Add(elevator1);
         _elevators.Add(elevator2);
+        _elevators.Add(elevator3);
         // todo : elevator 추가
     }
 

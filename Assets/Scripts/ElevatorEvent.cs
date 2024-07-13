@@ -58,3 +58,29 @@ public struct ElevatorPassengerExitEvent
         EventManager.TriggerEvent(_e);
     }
 }
+
+public struct ElevatorSettleUpEvent
+{
+    public Floor StartFloor;
+    public Floor ArrivalFloor;
+    public int AffectedCapacity;
+    public int ExitWantCount;
+    public ElevatorController Elevator;
+    private static ElevatorSettleUpEvent _e;
+
+    public static void Trigger(
+        Floor startFloor,
+        Floor arrivalFloor,
+        int affectedCapacity,
+        int exitWantCount,
+        ElevatorController elevator
+    )
+    {
+        _e.StartFloor = startFloor;
+        _e.ArrivalFloor = arrivalFloor;
+        _e.AffectedCapacity = affectedCapacity;
+        _e.ExitWantCount = exitWantCount;
+        _e.Elevator = elevator;
+        EventManager.TriggerEvent(_e);
+    }
+}

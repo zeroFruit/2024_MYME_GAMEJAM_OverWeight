@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 82968bf03d85b463eb082644453f8703
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - IncomeTextPrefab: {fileID: 2057376538018059810, guid: 11888cb923b5c4fe9beab32f44658273, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

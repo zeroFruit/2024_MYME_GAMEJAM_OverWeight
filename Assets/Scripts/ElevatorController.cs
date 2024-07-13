@@ -12,18 +12,20 @@ public class ElevatorController : MonoBehaviour
 {
     // 속도
     public float _speed = 3.0f;
+
     // 최대 수용
     public int _maxCapacity;
+
     // 멈출 수 있는 층
     public List<Floor> StoppableFloors;
-    
+
     public float _accelerationThreshold = 1f;
     public float _decelerationThreshold = 1f;
-    
+
     public List<Passenger> Passengers;
     public List<TextMeshPro> PassengerInfoText;
     public List<BoxScript> BoxScripts;
-    
+
     public Floor TargetFloor;
     public Floor _previousFloor;
     public ElevatorState CurrentState;
@@ -54,6 +56,8 @@ public class ElevatorController : MonoBehaviour
                 boxScript.gameObject.SetActive(false);
             }
         }
+
+        StartCoroutine(CoroutineUpdate());
     }
 
     public enum ElevatorState
@@ -64,23 +68,30 @@ public class ElevatorController : MonoBehaviour
         ONBOARDING,
     }
 
-    void Update()
+    // void Update()
+    IEnumerator CoroutineUpdate()
     {
-        switch (CurrentState)
+        while (true)
         {
-            case ElevatorState.IDLE:
-                UpdateIdle();
-                break;
-            case ElevatorState.MOVING:
-                UpdateMoving();
-                break;
-            case ElevatorState.OFFBOARDING:
-                UpdateOffBoarding();
-                break;
-            case ElevatorState.ONBOARDING:
-                UpdateOnBoarding();
-                break;
+            switch (CurrentState)
+            {
+                case ElevatorState.IDLE:
+                    UpdateIdle();
+                    break;
+                case ElevatorState.MOVING:
+                    UpdateMoving();
+                    break;
+                case ElevatorState.OFFBOARDING:
+                    yield return UpdateOffBoarding();
+                    break;
+                case ElevatorState.ONBOARDING:
+                    UpdateOnBoarding();
+                    break;
+            }
+
+            yield return null;
         }
+        
     }
 
     private void UpdateOnBoarding()
@@ -119,17 +130,28 @@ public class ElevatorController : MonoBehaviour
     }
 
 
-    private void UpdateOffBoarding()
+    IEnumerator UpdateOffBoarding()
     {
         // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
         Debug.Log($"Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx}");
-        _previousFloor = TargetFloor;
+        
         List<Passenger> exitWantPassengers = GetExitWantPassengers(_previousFloor);
+        ElevatorSettleUpEvent.Trigger(
+            _previousFloor,
+            TargetFloor,
+            Passengers.Count,
+            exitWantPassengers.Count,
+            this
+        );
+        
+        
         foreach (var passenger in exitWantPassengers)
         {
             Exit(passenger);
         }
 
+        yield return new WaitForSeconds(0.5f);
+        _previousFloor = TargetFloor;
         CurrentState = ElevatorState.ONBOARDING;
     }
 
@@ -232,7 +254,7 @@ public class ElevatorController : MonoBehaviour
     {
         Passengers.Remove(passenger);
         Debug.Log(
-            $"exit : {passenger.StartFloor.FloorIdx} -> {passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
+            $"exit : {passenger.StartFloor.FloorIdx} -> {passenger.TargetFloor.FloorIdx} : ${passenger.GetInstanceID()}");
         // todo : 사람 표시 제거
         foreach (var boxScript in BoxScripts)
         {
