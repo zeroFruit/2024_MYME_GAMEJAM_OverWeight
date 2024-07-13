@@ -3,7 +3,7 @@ using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PassengerManager : Singleton<PassengerManager>, EventListener<ElevatorPassengerEnteredEvent>
+public class PassengerManager : Singleton<PassengerManager>, EventListener<ElevatorPassengerEnteredEvent>, EventListener<ElevatorPassengerExitEvent>
 {
     public List<Passenger> Passengers;
 
@@ -22,13 +22,7 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
         Passengers.Add(spawned);
         return spawned;
     }
-
-    void Despawn(Passenger passenger)
-    {
-        Passengers.Remove(passenger);
-        passenger.gameObject.SetActive(false);
-    }
-
+    
     public List<Passenger> GetPassengersOnFloor(Floor floor)
     {
         List<Passenger> result = new List<Passenger>();
@@ -49,6 +43,11 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
         e.Passenger.gameObject.SetActive(false);
     }
 
+    public void OnEvent(ElevatorPassengerExitEvent e)
+    {
+        Destroy(e.Passenger.gameObject);
+    }
+    
     public List<Passenger> GetMinimalSizePassengerPerFloor()
     {
         throw new System.NotImplementedException();
@@ -110,10 +109,12 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     void OnEnable()
     {
         this.StartListeningEvent<ElevatorPassengerEnteredEvent>();
+        this.StartListeningEvent<ElevatorPassengerExitEvent>();
     }
 
     void OnDisable()
     {
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
+        this.StopListeningEvent<ElevatorPassengerExitEvent>();
     }
 }

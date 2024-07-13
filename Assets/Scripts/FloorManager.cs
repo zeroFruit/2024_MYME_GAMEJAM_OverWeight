@@ -19,6 +19,11 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     [Header("Spawn")] public float spawnTimer;
     public float spawnSpeed;
     public float spawnTiming;
+    
+    [Header("SpawnProbability")] public int normalSpawnProbability;
+    public int onWorkSpawnProbability;
+    public int lunchSpawnProbability;
+    public int offWorkSpawnProbability;
 
     [Header("Prefab")] public Floor floorPrefab;
     public Slot slotPrefab;
@@ -33,6 +38,10 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         spawnTimer = 0;
         spawnSpeed = 3f;
         spawnTiming = 10;
+        normalSpawnProbability = 20;
+        onWorkSpawnProbability = 70;
+        lunchSpawnProbability = 40;
+        offWorkSpawnProbability = 70;
         for (int idx = 0; idx < day; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
@@ -147,7 +156,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     {
         this.StopListeningEvent<ElevatorArrivalEvent>();
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
-        this.StartListeningEvent<DayEvent>();
+        this.StopListeningEvent<DayEvent>();
     }
 
     #region Debug

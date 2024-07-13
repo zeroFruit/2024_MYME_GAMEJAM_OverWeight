@@ -13,10 +13,7 @@ public class Floor : MonoBehaviour
 
     [Header("FloorInfo")] public int capacityOfPassengers;
     public int maxCapacityOfPassengers;
-    [Header("SpawnProbability")] public int normalSpawnProbability;
-    public int onWorkSpawnProbability;
-    public int lunchSpawnProbability;
-    public int offWorkSpawnProbability;
+    
     [Header("InnerData")] public List<Slot> Slots;
     public List<Passenger> Passengers;
     public FloorTimer timer;
@@ -29,11 +26,6 @@ public class Floor : MonoBehaviour
         FloorIdx = floorIdx;
         capacityOfPassengers = 7;
         maxCapacityOfPassengers = 10;
-
-        normalSpawnProbability = 20;
-        onWorkSpawnProbability = 70;
-        lunchSpawnProbability = 40;
-        offWorkSpawnProbability = 70;
 
         Slots = new List<Slot>();
         for (int idx = 0; idx < maxCapacityOfPassengers; idx++)
@@ -92,7 +84,7 @@ public class Floor : MonoBehaviour
     private void SpawnNoneWave()
     {
         // 스폰 여부 체크
-        if (GetResultFromProbability(normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
         {
             spawn();
         }
@@ -108,7 +100,7 @@ public class Floor : MonoBehaviour
         }
 
         // 1층은 출근 확률 적용 스폰
-        if (GetResultFromProbability(onWorkSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.onWorkSpawnProbability))
         {
             spawn();
         }
@@ -117,7 +109,7 @@ public class Floor : MonoBehaviour
     private void SpawnLunchWave()
     {
         // 점심먹으러 1층 가는 사람 스폰
-        if (GetResultFromProbability(lunchSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
         {
             spawn(FloorManager.Instance.Floors.First());
             return;
@@ -126,7 +118,7 @@ public class Floor : MonoBehaviour
         // 점심먹고 올라오는 사람 스폰
         if (FloorIdx == 0)
         {
-            if (GetResultFromProbability(lunchSpawnProbability))
+            if (GetResultFromProbability(FloorManager.Instance.lunchSpawnProbability))
             {
                 spawn();
                 return;
@@ -134,7 +126,7 @@ public class Floor : MonoBehaviour
         }
 
         // 나머지
-        if (GetResultFromProbability(normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
         {
             spawn();
         }
@@ -143,10 +135,10 @@ public class Floor : MonoBehaviour
     private void SpawnOffWorkWave()
     {
         // 스폰 여부 체크
-        if (GetResultFromProbability(normalSpawnProbability))
+        if (GetResultFromProbability(FloorManager.Instance.normalSpawnProbability))
         {
             // 퇴근길로 1층 갈 확률 적용
-            if (GetResultFromProbability(offWorkSpawnProbability))
+            if (GetResultFromProbability(FloorManager.Instance.offWorkSpawnProbability))
             {
                 spawn(FloorManager.Instance.Floors.First());
                 return;
