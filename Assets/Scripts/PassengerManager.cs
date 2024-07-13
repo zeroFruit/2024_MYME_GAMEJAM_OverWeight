@@ -116,5 +116,5 @@ public class PassengerManager : Singleton<PassengerManager>, EventListener<Eleva
     {
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
         this.StopListeningEvent<ElevatorPassengerExitEvent>();
-    }
+    }   
 }

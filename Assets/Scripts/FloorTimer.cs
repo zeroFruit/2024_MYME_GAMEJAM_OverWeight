@@ -12,6 +12,7 @@ public class FloorTimer : MonoBehaviour
     public void Init()
     {
         isInProgress = false;
+
         transform.localPosition = new Vector3(-31, 0.44f, 0);
         transform.gameObject.SetActive(false);
     }
@@ -20,6 +21,11 @@ public class FloorTimer : MonoBehaviour
     {
         isInProgress = false;
         gameObject.SetActive(false);
+    }
+
+    public void StopProgress()
+    {
+        isInProgress = false;
     }
 
     public void Progress(float duration)
@@ -41,16 +47,24 @@ public class FloorTimer : MonoBehaviour
         float timer = 0f;
         while (value > 0f)
         {
+            if (!isInProgress)
+            {
+                yield break;
+            }
+
             timer += Time.deltaTime;
             value = 1 - timer / this._duration;
             int remainTime = Mathf.FloorToInt(value * 10);
-            transform.GetComponent<TextMeshPro>().text = "" + remainTime;
+            TextMeshPro textField = transform.GetComponent<TextMeshPro>();
+            textField.text = "" + remainTime;
+            textField.color = new Color(1 - value, 0, 0);
+
             yield return null;
         }
 
         isInProgress = false;
-        // todo : trigger event
         ResetProgress();
+        GameOverEvent.Trigger();
     }
 }
 

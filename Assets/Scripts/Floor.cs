@@ -256,6 +256,12 @@ public class Floor : MonoBehaviour
         RearrangePassengers();
     }
 
+    public void StopFloor()
+    {
+        timer.StopProgress();
+        RearrangePassengers();
+    }
+
     public void changeWave(WaveType waveType)
     {
         this.WaveType = waveType;

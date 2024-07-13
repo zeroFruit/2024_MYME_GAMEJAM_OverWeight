@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArrivalEvent>,
-    EventListener<ElevatorPassengerEnteredEvent>, EventListener<DayEvent>
+    EventListener<ElevatorPassengerEnteredEvent>, EventListener<DayEvent>, EventListener<GameOverEvent>
 {
     public List<Floor> Floors { get; private set; }
 
@@ -28,6 +28,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     [Header("Prefab")] public Floor floorPrefab;
     public Slot slotPrefab;
     public FloorTimer FloorTimerPrefab;
+
+    [Header("UIPaenl")] public UIPanel GameOverPanel;
 
     protected override void Awake()
     {
@@ -120,8 +122,6 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                 Debug.Log("FloorManager: Unhandled Event Type! - " + e.EventType.ToString());
                 break;
         }
-
-        this.isPlaying = true;
     }
 
     private void ApplyWave(WaveType waveType)
@@ -132,11 +132,6 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         }
     }
 
-    private void ResetWave(WaveType waveType)
-    {
-        throw new NotImplementedException();
-    }
-
     private void reset()
     {
         foreach (var floor in Floors)
@@ -145,11 +140,24 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         }
     }
 
+    public void OnEvent(GameOverEvent e)
+    {
+        Debug.Log("Game Over!!");
+        this.isPlaying = false;
+        foreach (var floor in Floors)
+        {
+            floor.StopFloor();
+        }
+        GameOverPanel.Show(null);
+    }
+
+
     void OnEnable()
     {
         this.StartListeningEvent<ElevatorArrivalEvent>();
         this.StartListeningEvent<ElevatorPassengerEnteredEvent>();
         this.StartListeningEvent<DayEvent>();
+        this.StartListeningEvent<GameOverEvent>();
     }
 
     void OnDisable()
@@ -157,8 +165,9 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         this.StopListeningEvent<ElevatorArrivalEvent>();
         this.StopListeningEvent<ElevatorPassengerEnteredEvent>();
         this.StopListeningEvent<DayEvent>();
+        this.StopListeningEvent<GameOverEvent>();
     }
-
+    
     #region Debug
 
     [InspectorButton("TestRemovePassenger")]
