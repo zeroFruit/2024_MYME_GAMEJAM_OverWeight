@@ -12,12 +12,13 @@ using Random = UnityEngine.Random;
 public class ElevatorController : MonoBehaviour
 {
     public int ElevatorIdx;
+
     // 속도
     public float _speed = 3.0f;
 
     // 최대 수용
     public int _maxCapacity;
-    
+
     public float EmptyWeight;
 
     // 멈출 수 있는 층
@@ -62,8 +63,6 @@ public class ElevatorController : MonoBehaviour
                 boxScript.gameObject.SetActive(false);
             }
         }
-
-        StartCoroutine(CoroutineUpdate());
     }
 
     public enum ElevatorState
@@ -74,39 +73,33 @@ public class ElevatorController : MonoBehaviour
         ONBOARDING,
     }
 
-    // void Update()
-    IEnumerator CoroutineUpdate()
+    private void Update()
     {
         var elevatorControllerRandomId = Random.value;
-        while (true)
+        switch (CurrentState)
         {
-            switch (CurrentState)
-            {
-                case ElevatorState.IDLE:
-                    UpdateIdle();
-                    break;
-                case ElevatorState.MOVING:
-                    UpdateMoving();
-                    break;
-                case ElevatorState.OFFBOARDING:
-                    yield return UpdateOffBoarding(elevatorControllerRandomId);
-                    break;
-                case ElevatorState.ONBOARDING:
-                    yield return UpdateOnBoarding(elevatorControllerRandomId);
-                    break;
-            }
-
-            yield return null;
+            case ElevatorState.IDLE:
+                UpdateIdle();
+                break;
+            case ElevatorState.MOVING:
+                UpdateMoving();
+                break;
+            case ElevatorState.OFFBOARDING:
+                UpdateOffBoarding(elevatorControllerRandomId);
+                break;
+            case ElevatorState.ONBOARDING:
+                UpdateOnBoarding(elevatorControllerRandomId);
+                break;
         }
     }
 
-    IEnumerator UpdateOnBoarding(float random)
+    private void UpdateOnBoarding(float random)
     {
-        // Debug.Log("H");
-        yield return new WaitForSeconds(0.3f);
-        Debug.Log($"[ElevatorState] Start onboarding {_previousFloor.FloorIdx}-{TargetFloor.FloorIdx} random Id: {random}");
+        Debug.Log(
+            $"[ElevatorState] Start onboarding {_previousFloor.FloorIdx}-{TargetFloor.FloorIdx} random Id: {random}");
         // 에니메이션이나 뭐 하면될듯 ?
-        if (ElevatorManager.Instance.IsQueueEmpty(this) && Passengers.Count == 0)
+        if (ElevatorManager.Instance.IsQueueEmpty(this) && Passengers.Count == 0 &&
+            this.CurrentState != ElevatorState.MOVING)
         {
             Debug.Log("체크 2222");
             CurrentDirection = ElevatorDirection.UNWARE;
@@ -139,10 +132,11 @@ public class ElevatorController : MonoBehaviour
     }
 
 
-    IEnumerator UpdateOffBoarding(float random)
+    private void UpdateOffBoarding(float random)
     {
         // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
-        Debug.Log($"[ElevatorState] Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx} randomId: {random}");
+        Debug.Log(
+            $"[ElevatorState] Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx} randomId: {random}");
 
         List<Passenger> exitWantPassengers = GetExitWantPassengers(_previousFloor);
         ElevatorSettleUpEvent.Trigger(
@@ -159,7 +153,6 @@ public class ElevatorController : MonoBehaviour
             Exit(passenger);
         }
 
-        yield return new WaitForSeconds(0.3f);
         _previousFloor = TargetFloor;
         CurrentState = ElevatorState.ONBOARDING;
     }
