@@ -1,9 +1,12 @@
 using System;
+using HAWStudio.Common;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
     public Animator Animator;
+    public FeedbackPlayer CreateFeedback;
+    
     public Floor StartFloor;
     public Floor TargetFloor;
     public int Weight; // 비중
@@ -29,6 +32,11 @@ public class Passenger : MonoBehaviour
 
         SpawnedAt = DateTime.Now;
         inElevator = false;
+
+        if (this.CreateFeedback != null)
+        {
+            this.CreateFeedback.PlayFeedbacks();
+        }
     }
 
     private void Start()
