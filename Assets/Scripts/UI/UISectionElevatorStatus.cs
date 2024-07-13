@@ -10,4 +10,8 @@ public class UISectionElevatorStatus : MonoBehaviour
     {
         ElevatorIndex = index;
     }
+
+    void Update() {
+
+    }
 }
