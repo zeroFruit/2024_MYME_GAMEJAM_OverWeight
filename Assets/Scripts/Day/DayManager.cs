@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using SSR.OverWeight;
 using UnityEngine;
@@ -30,6 +31,13 @@ public class DayManager : Singleton<DayManager>
     {
         base.Awake();
         this.Initialize();
+        StartCoroutine(sendOnStart());
+    }
+
+    private IEnumerator sendOnStart()
+    {
+        yield return null;
+        StartDay();
     }
     
     public void Initialize()
@@ -44,7 +52,6 @@ public class DayManager : Singleton<DayManager>
 
         this.Day = 0;
         this.isInProgress = false;
-        StartDay();
     }
 
     private void StartDay()
