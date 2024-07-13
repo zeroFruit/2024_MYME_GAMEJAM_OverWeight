@@ -4,9 +4,7 @@ using SSR.OverWeight;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIPanelElevatorUpgrade : UIPanel,
-    EventListener<UpgradeEvent>,
-    EventListener<GoldChangedEvent>
+public class UIPanelElevatorUpgrade : UIPanel
 {
     #region Binding
 
@@ -109,31 +107,4 @@ public class UIPanelElevatorUpgrade : UIPanel,
 
     #endregion
 
-    public void OnEvent(UpgradeEvent e)
-    {
-        switch (e.EventType)
-        {
-            case UpgradeEventType.Updated:
-                this.Refresh();
-                break;
-        }
-    }
-    
-    public void OnEvent(GoldChangedEvent e)
-    {
-        this.Refresh();   
-    }
-
-    void OnEnable()
-    {
-        this.StartListeningEvent<UpgradeEvent>();
-        this.StartListeningEvent<GoldChangedEvent>();
-    }
-
-    void OnDisable()
-    {
-        this.StopListeningEvent<UpgradeEvent>();
-        this.StopListeningEvent<GoldChangedEvent>();
-    }
-    
 }

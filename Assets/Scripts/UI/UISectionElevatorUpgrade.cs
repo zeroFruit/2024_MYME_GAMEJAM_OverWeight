@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using SSR.OverWeight;
 using TMPro;
 using UnityEngine;
 
-public class UISectionElevatorUpgrade : MonoBehaviour
+public class UISectionElevatorUpgrade : MonoBehaviour,
+    EventListener<UpgradeEvent>,
+    EventListener<GoldChangedEvent>
 {
     public int Idx;
     public TextMeshProUGUI Title;
@@ -41,5 +44,33 @@ public class UISectionElevatorUpgrade : MonoBehaviour
         {
             this._upgradeSections[i].gameObject.SetActive(false);
         }
+    }
+    
+    public void OnEvent(UpgradeEvent e)
+    {
+        switch (e.EventType)
+        {
+            case UpgradeEventType.Updated:
+                this.Initialize();
+                break;
+        }
+    }
+    
+    public void OnEvent(GoldChangedEvent e)
+    {
+        
+        this.Initialize();   
+    }
+
+    void OnEnable()
+    {
+        this.StartListeningEvent<UpgradeEvent>();
+        this.StartListeningEvent<GoldChangedEvent>();
+    }
+
+    void OnDisable()
+    {
+        this.StopListeningEvent<UpgradeEvent>();
+        this.StopListeningEvent<GoldChangedEvent>();
     }
 }

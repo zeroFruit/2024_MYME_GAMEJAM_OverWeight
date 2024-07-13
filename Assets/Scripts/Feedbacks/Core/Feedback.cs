@@ -170,6 +170,11 @@ namespace HAWStudio.Common
 
 
         #region Play
+        
+        protected virtual IEnumerator WaitFor(float delay)
+        {
+	        yield return CoroutineHelper.WaitFor(delay);
+        }
 
         /// <summary>
         /// Plays the feedback
