@@ -14,6 +14,7 @@ public class UIPanelElevatorAlgorithm : UIPanel
     
     void OnClickClose()
     {
+        Debug.Log("Clicked close");
         this.Hide();
     }
 }
