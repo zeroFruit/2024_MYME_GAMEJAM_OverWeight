@@ -13,7 +13,7 @@ public enum DayState
 
 public class DayManager : Singleton<DayManager>
 {
-    public float DayLengthSeconds = 300f;
+    public float DayLengthSeconds = 60f;
     public List<DayWave> DayWaves;
     public int Day;
     public bool isInProgress;

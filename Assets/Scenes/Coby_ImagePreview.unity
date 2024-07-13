@@ -3139,6 +3139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Passengers: []
   passengerPrefab: {fileID: 828280621713567105, guid: 1761a0c58be6143f490dbb1fc892415c, type: 3}
+  totalOffboardingPassengerCount: 0
 --- !u!224 &685777728 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8624743943614155065, guid: de667f986f5344c16834b6312f065d25, type: 3}
@@ -6001,6 +6002,7 @@ MonoBehaviour:
   isPlaying: 0
   spawnTimer: 0
   spawnDuration: 0
+  spawnMinDuration: 0
   normalSpawnProbability: 0
   onWorkSpawnProbability: 0
   lunchSpawnProbability: 0
@@ -7139,6 +7141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98df15d4418144c58989d432c465beda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _elevators: []
   ElevatorPrefab: {fileID: 4583306687364164246, guid: c823e7524c9d74388b51fc1d6da6ade7, type: 3}
   SpawnFloorIdx: 0
   TestButton: 0
@@ -9148,6 +9151,7 @@ MonoBehaviour:
   FadeInDuration: 0.2
   FadeOutDuration: 0.2
   CloseButton: {fileID: 434852584}
+  elevatorSettingUIs: []
   TestShowButton: 0
   TestHideButton: 0
 --- !u!225 &1775812575
@@ -9247,14 +9251,14 @@ MonoBehaviour:
   DayLengthSeconds: 180
   DayWaves:
   - WaveType: 1
-    StartTime: 23
-    EndTime: 38
+    StartTime: 7.666667
+    EndTime: 12.66667
   - WaveType: 2
-    StartTime: 61
-    EndTime: 98
+    StartTime: 20.33333
+    EndTime: 32.66667
   - WaveType: 3
-    StartTime: 128
-    EndTime: 151
+    StartTime: 42.66667
+    EndTime: 50.333332
   Day: 0
   isInProgress: 0
   Progress: 0

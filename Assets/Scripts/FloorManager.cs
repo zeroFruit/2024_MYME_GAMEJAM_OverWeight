@@ -19,6 +19,7 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     [Header("Spawn")] public float spawnTimer;
     public float spawnDuration;
+    public float spawnMinDuration;
     
     [Header("SpawnProbability")] public int normalSpawnProbability;
     public int onWorkSpawnProbability;
@@ -39,11 +40,12 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         initialFloorNum = 6;
         isPlaying = false;
         spawnTimer = 0;
-        spawnDuration = 10f;
+        spawnDuration = 8f;
+        spawnMinDuration = 3f;
         normalSpawnProbability = 20;
-        onWorkSpawnProbability = 70;
-        lunchSpawnProbability = 40;
-        offWorkSpawnProbability = 70;
+        onWorkSpawnProbability = 80;
+        lunchSpawnProbability = 60;
+        offWorkSpawnProbability = 80;
         for (int idx = 0; idx < maxFloorNum; idx++)
         {
             Floor floor = Instantiate(floorPrefab);
@@ -62,12 +64,17 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         if (isPlaying)
         {
             spawnTimer += Time.deltaTime;
-            if (spawnTimer >= spawnDuration)
+            if (spawnTimer >= GetNowSpawnDuration())
             {
                 spawnTimer = 0;
                 SpawnPassenger();
             }
         }
+    }
+
+    float GetNowSpawnDuration()
+    {
+        return Mathf.Min(spawnDuration - DayManager.Instance.Day, spawnMinDuration);
     }
 
     private void SpawnPassenger()
