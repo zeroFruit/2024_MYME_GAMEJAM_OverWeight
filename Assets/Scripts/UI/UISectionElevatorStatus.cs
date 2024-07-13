@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UISectionElevatorStatus : MonoBehaviour
 {
@@ -19,5 +16,7 @@ public class UISectionElevatorStatus : MonoBehaviour
         {
             button.SetElevatorIndex(ElevatorIndex);
         }
+
+        GetComponentInChildren<UIElevatorCapacity>().SetElevatorIndex(ElevatorIndex);
     }
 }
