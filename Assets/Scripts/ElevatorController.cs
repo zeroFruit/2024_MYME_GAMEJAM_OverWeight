@@ -100,11 +100,41 @@ public class ElevatorController : MonoBehaviour
     }
 
     IEnumerator ElevatorAnimation() {
+        var prev = CurrentState; 
+        var next = CurrentState;
         while (true) {
-            for(int i = 0; i < ElevatorSprites.Count; i++) {
-                ElevatorSpriteRenderer.sprite = ElevatorSprites[i];
-                yield return new WaitForSeconds(0.1f);
+            yield return null;
+            prev = next;
+            next = CurrentState;
+
+            if (prev == next) {
+                switch (next) {
+                    case ElevatorState.IDLE:
+                        ElevatorSpriteRenderer.sprite = ElevatorSprites.Last();
+                        break;
+                    case ElevatorState.MOVING:
+                        ElevatorSpriteRenderer.sprite = ElevatorSprites.First();
+                        break;
+                    case ElevatorState.OFFBOARDING:
+                        break;
+                    case ElevatorState.ONBOARDING:
+                        break;
+                }
+                continue;
             }
+
+            if (next == ElevatorState.OFFBOARDING) {
+                for(int i = 0; i < ElevatorSprites.Count; i++) {
+                    ElevatorSpriteRenderer.sprite = ElevatorSprites[i];
+                    yield return new WaitForSeconds(0.1f);
+                }
+            } else if (next == ElevatorState.ONBOARDING) {
+                for(int i = 0; i < ElevatorSprites.Count; i++) {
+                    ElevatorSpriteRenderer.sprite = ElevatorSprites[ElevatorSprites.Count - 1 - i];
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+
         }
     }
 
