@@ -383,6 +383,11 @@ public class ElevatorController : MonoBehaviour
         EmptyWeight = emptyWeight;
     }
 
+    public void ChangeSpeed(float newSpeed)
+    {
+        this._speed = newSpeed;
+    }
+
     internal void AddStoppableFloor(Floor floor)
     {
         foreach (var stoppable in StoppableFloors)

@@ -70,6 +70,8 @@ public class UpgradeManager : Singleton<UpgradeManager>
             return;
         ElevatorUpgrades[idx].CurrentSpeedLevel += 1;
         
+        ElevatorManager.Instance.SetSpeed(idx,ElevatorUpgrades[idx].CurrentSpeedUpgrade.AdditionalMaxSpeed);
+        
         UpgradeEvent.Trigger(UpgradeEventType.Updated);
     }
 

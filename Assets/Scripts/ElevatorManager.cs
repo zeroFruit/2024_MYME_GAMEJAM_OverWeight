@@ -336,4 +336,9 @@ public class ElevatorManager : Singleton<ElevatorManager>, EventListener<Elevato
     {
         _elevators[idx].ChangeEmptyWeight(emptyWeight);
     }
+
+    public void SetSpeed(int idx, float speed)
+    {
+        _elevators[idx].ChangeSpeed(speed);
+    }
 }
