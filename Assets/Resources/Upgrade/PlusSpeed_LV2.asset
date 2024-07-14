@@ -20,5 +20,5 @@ MonoBehaviour:
   Level: 2
   EmptyWeight: 0
   MaxCapacity: 0
-  AdditionalMaxSpeed: 9
+  AdditionalMaxSpeed: 7
   AdditionalSaveCost: 0
