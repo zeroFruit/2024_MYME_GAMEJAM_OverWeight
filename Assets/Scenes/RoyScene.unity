@@ -2793,6 +2793,12 @@ MonoBehaviour:
   isPlaying: 0
   spawnTimer: 0
   spawnDuration: 0
+  daySpawnDuration:
+  - 3
+  - 2
+  - 1.5
+  - 1.2
+  - 1
   spawnMinDuration: 0
   normalSpawnProbability: 0
   onWorkSpawnProbability: 0
