@@ -5228,7 +5228,7 @@ MonoBehaviour:
   DebugActive: 0
   BoundImage: {fileID: 789552311}
   Mode: 0
-  Duration: 4
+  Duration: 2
   StartsOff: 1
   EventOriginTransform: {fileID: 0}
   DisableOnStop: 1
@@ -5236,8 +5236,8 @@ MonoBehaviour:
   ModifyColor: 1
   ColorOverTime:
     serializedVersion: 2
-    key0: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 0}
-    key1: {r: 0.11372549, g: 0.11372549, b: 0.11372549, a: 0.43137255}
+    key0: {r: 0, g: 0, b: 0, a: 0}
+    key1: {r: 0, g: 0, b: 0, a: 0.48235294}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
