@@ -37,6 +37,8 @@ public class ElevatorController : MonoBehaviour
     public Floor _previousFloor;
     public ElevatorState CurrentState;
     public ElevatorDirection CurrentDirection;
+    public SpriteRenderer ElevatorSpriteRenderer;
+    public List<Sprite> ElevatorSprites;
 
 
     public void Init(
@@ -65,6 +67,8 @@ public class ElevatorController : MonoBehaviour
                 boxScript.gameObject.SetActive(false);
             }
         }
+
+        StartCoroutine(ElevatorAnimation());
     }
 
     public enum ElevatorState
@@ -92,6 +96,15 @@ public class ElevatorController : MonoBehaviour
             case ElevatorState.ONBOARDING:
                 UpdateOnBoarding(elevatorControllerRandomId);
                 break;
+        }
+    }
+
+    IEnumerator ElevatorAnimation() {
+        while (true) {
+            for(int i = 0; i < ElevatorSprites.Count; i++) {
+                ElevatorSpriteRenderer.sprite = ElevatorSprites[i];
+                yield return new WaitForSeconds(0.1f);
+            }
         }
     }
 

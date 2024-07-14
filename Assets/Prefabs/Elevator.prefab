@@ -1554,6 +1554,11 @@ MonoBehaviour:
   _previousFloor: {fileID: 0}
   CurrentState: 0
   CurrentDirection: 0
+  ElevatorSpriteRenderer: {fileID: 4773860547741483107}
+  ElevatorSprites:
+  - {fileID: -6486691005523294710, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: 960982126980071622, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: -2557122660403769879, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
 --- !u!1 &5051030678460309701
 GameObject:
   m_ObjectHideFlags: 0
