@@ -60,11 +60,6 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                 floor.Actiavte();
             }
         }
-
-        for (int idx = 0; idx < 3; idx++)
-        {
-            daySpawnDuration[idx] = 5 - idx;
-        }
     }
 
     void Update()
