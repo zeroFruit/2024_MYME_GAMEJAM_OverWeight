@@ -2793,12 +2793,16 @@ MonoBehaviour:
   isPlaying: 0
   spawnTimer: 0
   spawnDuration: 0
+  lunchMultiplier: 0.6
+  lunchActiveNumber: 01000000020000000200000003000000030000000400000005000000
   daySpawnDuration:
   - 2
   - 1.8
   - 1.6
   - 1.4
   - 1.4
+  - 1.2
+  - 0.5
   spawnMinDuration: 0
   normalSpawnProbability: 0
   onWorkSpawnProbability: 0
@@ -2808,6 +2812,8 @@ MonoBehaviour:
   slotPrefab: {fileID: -7005209119626937544, guid: a20207568f9024aaab350090a01126fa, type: 3}
   FloorTimerPrefab: {fileID: 1502083898987170076, guid: a6f0ff4205598468a891fc40e4910840, type: 3}
   GameOverPanel: {fileID: 1966819354}
+  usingChangeList: 
+  originalValues: []
   TestRemovePassengerButton: 0
 --- !u!1 &725546653
 GameObject:

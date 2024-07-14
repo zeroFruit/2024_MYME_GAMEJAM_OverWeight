@@ -10,8 +10,7 @@ using Random = UnityEngine.Random;
 
 public class Floor : MonoBehaviour
 {
-    [Header("FloorInfo")] 
-    public int FloorIdx;
+    [Header("FloorInfo")] public int FloorIdx;
     public string FloorName;
 
     public int capacityOfPassengers;
@@ -24,13 +23,45 @@ public class Floor : MonoBehaviour
 
     public WaveType WaveType;
 
+    // roy
+    public float spawnTimer = 0;
+    public bool isPlaying;
+    public List<float> DaySpawnDuration = new List<float>();
+    public float SpawnMinDuration = 2f;
+    public float SpawnDuration = 3f;
 
-    public void Init(Slot slotPrefab, int floorIdx, string floorName, FloorTimer floorTimer)
+    float GetNowSpawnDuration()
+    {
+        var day = DayManager.Instance.Day;
+        if (day < DaySpawnDuration.Count)
+        {
+            return DaySpawnDuration[day];
+        }
+        else
+        {
+            // . coby's work
+            return Mathf.Min(SpawnDuration - DayManager.Instance.Day, SpawnMinDuration);
+        }
+    }
+
+    public void Init(
+        Slot slotPrefab,
+        int floorIdx,
+        string floorName,
+        FloorTimer floorTimer,
+        List<float> daySpawnDuration,
+        float minSpawnDuration,
+        float spawnDuration)
     {
         FloorIdx = floorIdx;
         FloorName = floorName;
         capacityOfPassengers = 7;
         maxCapacityOfPassengers = 10;
+
+        //@roy
+        DaySpawnDuration = daySpawnDuration.ToList();
+        SpawnMinDuration = minSpawnDuration;
+        SpawnDuration = spawnDuration;
 
         Slots = new List<Slot>();
         for (int idx = 0; idx < maxCapacityOfPassengers; idx++)
@@ -67,7 +98,18 @@ public class Floor : MonoBehaviour
         Color color = isActivated ? new Color(0, 0, 0) : new Color(1f, 1f, 1f);
         textField.color = color;
         textField.outlineColor = color;
+
+        if (isPlaying)
+        {
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= GetNowSpawnDuration())
+            {
+                spawnTimer = 0;
+                SpawnPassenger();
+            }
+        }
     }
+
 
     private string GetFloorName()
     {
@@ -85,7 +127,7 @@ public class Floor : MonoBehaviour
         {
             return;
         }
-        
+
         // 승객 초과 타이머 체크
         if (Passengers.Count >= capacityOfPassengers)
         {

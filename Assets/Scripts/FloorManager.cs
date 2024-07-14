@@ -20,7 +20,9 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     [Header("Spawn")] public float spawnTimer;
     public float spawnDuration;
-
+    public float lunchMultiplier;
+    public List<int> lunchActiveNumber;
+    
     public List<float> daySpawnDuration = new List<float>();
     public float spawnMinDuration;
 
@@ -53,7 +55,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         {
             Floor floor = Instantiate(floorPrefab);
             floor.name += $"{idx}";
-            floor.Init(slotPrefab, idx, FloorName.NameList[idx], FloorTimerPrefab);
+            floor.Init(slotPrefab, idx, FloorName.NameList[idx], FloorTimerPrefab, daySpawnDuration, spawnMinDuration,
+                spawnMinDuration);
             Floors.Add(floor.GetComponent<Floor>());
             if (floor.FloorIdx < initialFloorNum)
             {
@@ -62,31 +65,14 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
         }
     }
 
-    void Update()
+    public void SetIsPlaying(bool b)
     {
-        if (isPlaying)
+        foreach (var floor in Floors)
         {
-            spawnTimer += Time.deltaTime;
-            if (spawnTimer >= GetNowSpawnDuration())
-            {
-                spawnTimer = 0;
-                SpawnPassenger();
-            }
+            floor.isPlaying = b;
         }
     }
 
-    float GetNowSpawnDuration()
-    {
-        var day = DayManager.Instance.Day;
-        if (day < daySpawnDuration.Count)
-        {
-            return daySpawnDuration[day];
-        }
-        else {
-            // . coby's work
-            return Mathf.Min(spawnDuration - DayManager.Instance.Day, spawnMinDuration);
-        }
-    }
 
     private void SpawnPassenger()
     {
@@ -126,6 +112,9 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
     }
 
 
+    public List<int> usingChangeList = new List<int>();
+    public List<float> originalValues = new List<float>();
+
     public void OnEvent(DayEvent e)
     {
         switch (e.EventType)
@@ -139,15 +128,47 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                     }
                 }
 
-                this.isPlaying = true;
+                SetIsPlaying(true);
                 break;
             case DayEventType.DayEnded:
-                this.isPlaying = false;
+                SetIsPlaying(false);
                 break;
             case DayEventType.WaveStarted:
+                WaveType waveType = (WaveType)e.Args;
+                int currentDay = DayManager.Instance.Day;
+                if (waveType == WaveType.Lunch)
+                {
+                    for (int i = 0; i < lunchActiveNumber[currentDay]; i++)
+                    {
+                        int idx = Random.Range(0, GetNowFloorNum());
+                        usingChangeList.Add(idx);
+                        if (Floors[idx].DaySpawnDuration.Count > currentDay)
+                        {
+                            originalValues.Add(Floors[idx].DaySpawnDuration[currentDay]);
+                            Floors[idx].DaySpawnDuration[currentDay] *= lunchMultiplier;
+                        }
+                    }
+                }
+
                 this.ApplyWave((WaveType)e.Args);
                 break;
             case DayEventType.WaveEnded:
+                WaveType waveType2 = (WaveType)e.Args;
+                if (waveType2 == WaveType.Lunch)
+                {
+                    foreach (var idx in usingChangeList)
+                    {
+                        int currentDayResume = DayManager.Instance.Day;
+                        if (Floors[idx].DaySpawnDuration.Count > currentDayResume)
+                        {
+                            Floors[idx].DaySpawnDuration[currentDayResume] = originalValues[currentDayResume];
+                        }
+                    }
+
+                    usingChangeList.Clear();
+                    originalValues.Clear();
+                }
+                
                 this.ApplyWave(WaveType.None);
                 break;
             default:
