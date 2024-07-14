@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HAWStudio.Common;
 using SSR.OverWeight;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ using Random = UnityEngine.Random;
 
 public class ElevatorController : MonoBehaviour
 {
+    public FeedbackPlayer StopFeedback;
     public int ElevatorIdx;
 
     // 속도
@@ -101,7 +103,7 @@ public class ElevatorController : MonoBehaviour
         if (ElevatorManager.Instance.IsQueueEmpty(this) && Passengers.Count == 0 &&
             this.CurrentState != ElevatorState.MOVING)
         {
-            Debug.Log("체크 2222");
+            // Debug.Log("체크 2222");
             CurrentDirection = ElevatorDirection.UNWARE;
         }
 
@@ -137,6 +139,11 @@ public class ElevatorController : MonoBehaviour
         // 에니메이션이나 뭐 하면될듯 ? 몇초기다리기...
         Debug.Log(
             $"[ElevatorState] Start offboarding {_previousFloor.FloorIdx}->{TargetFloor.FloorIdx} randomId: {random}");
+        
+        if (this.StopFeedback != null)
+        {
+            this.StopFeedback.PlayFeedbacks();
+        }
 
         List<Passenger> exitWantPassengers = GetExitWantPassengers(_previousFloor);
         ElevatorSettleUpEvent.Trigger(
@@ -250,7 +257,7 @@ public class ElevatorController : MonoBehaviour
         }
 
         // 수정필요
-        Debug.Log($"enter passenger : ${passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
+        // Debug.Log($"enter passenger : ${passenger.StartFloor.FloorIdx} : ${passenger.GetInstanceID()}");
         ElevatorPassengerEnteredEvent.Trigger(passenger);
         return true;
     }

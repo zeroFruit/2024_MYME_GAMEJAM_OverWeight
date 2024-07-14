@@ -118,7 +118,7 @@ public class DayManager : Singleton<DayManager>
                     // 웨이브 시작
                     this._currentWave = dayWave.WaveType;
                     DayEvent.Trigger(DayEventType.WaveStarted, this._currentWave);
-                    Debug.Log($"wave started: {this._currentWave}");
+                    // Debug.Log($"wave started: {this._currentWave}");
                     return;
                 }
 
@@ -132,7 +132,7 @@ public class DayManager : Singleton<DayManager>
             if (dayWave.WaveType == this._currentWave)
             {
                 // 웨이브 끝
-                Debug.Log($"wave ended: {this._currentWave}");
+                // Debug.Log($"wave ended: {this._currentWave}");
                 this._currentWave = WaveType.None;
                 DayEvent.Trigger(DayEventType.WaveEnded, this._currentWave);
                 return;

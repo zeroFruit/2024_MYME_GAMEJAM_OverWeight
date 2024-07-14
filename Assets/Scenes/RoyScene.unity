@@ -293,7 +293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3.1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &56402151
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCD9C\uADFC \uC2DC\uAC04"
+  m_text: DAY - 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11b35e3f47da94bccb54af973453a337, type: 2}
   m_sharedMaterial: {fileID: -4231869159103642136, guid: 11b35e3f47da94bccb54af973453a337, type: 2}
@@ -8279,7 +8279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Wave
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 11b35e3f47da94bccb54af973453a337, type: 2}
   m_sharedMaterial: {fileID: -4231869159103642136, guid: 11b35e3f47da94bccb54af973453a337, type: 2}

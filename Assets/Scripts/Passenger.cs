@@ -1,11 +1,13 @@
 using System;
 using HAWStudio.Common;
+using TMPro;
 using UnityEngine;
 
 public class Passenger : MonoBehaviour
 {
     public Animator Animator;
     public FeedbackPlayer CreateFeedback;
+    public TextMeshPro TargetFloorText;
     
     public Floor StartFloor;
     public Floor TargetFloor;
@@ -23,6 +25,11 @@ public class Passenger : MonoBehaviour
     {
         StartFloor = start;
         TargetFloor = target ? target : FloorManager.Instance.GetRandomFloor(start);
+
+        if (this.TargetFloorText != null)
+        {
+            this.TargetFloorText.text = $"{this.TargetFloor.FloorIdx + 1}F";
+        }
         
         Weight = 1;
         isReadyToRide = false;

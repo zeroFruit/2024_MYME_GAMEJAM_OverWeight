@@ -18,9 +18,9 @@ public class UIWaveAlert : UIPanel,
         { WaveType.OffWork, "퇴근 시간" },
     };
 
-    public void Show(WaveType _currentWave)
+    public void Show()
     {
-        this.WaveNameText.text = this._texts[_currentWave];
+        this.WaveNameText.text = $"DAY - {DayManager.Instance.Day + 1}";
         this.AlertFeedback.PlayFeedbacks();
     }
     
@@ -54,7 +54,10 @@ public class UIWaveAlert : UIPanel,
         switch (e.EventType)
         {
             case DayEventType.WaveStarted:
-                this.Show((WaveType)e.Args);
+                // this.Show((WaveType)e.Args);
+                break;
+            case DayEventType.DayStarted:
+                this.Show();
                 break;
         }
     }

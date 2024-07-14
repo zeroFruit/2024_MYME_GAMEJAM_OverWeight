@@ -1539,15 +1539,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac11530a38b044fff90054bbec70e579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StopFeedback: {fileID: 0}
+  ElevatorIdx: 0
   _speed: 3
+  _maxCapacity: 0
+  EmptyWeight: 0
+  StoppableFloors: []
   _accelerationThreshold: 1
   _decelerationThreshold: 1
-  _maxCapacity: 0
   Passengers: []
   PassengerInfoText: []
   BoxScripts: []
   TargetFloor: {fileID: 0}
   _previousFloor: {fileID: 0}
+  CurrentState: 0
   CurrentDirection: 0
 --- !u!1 &5051030678460309701
 GameObject:

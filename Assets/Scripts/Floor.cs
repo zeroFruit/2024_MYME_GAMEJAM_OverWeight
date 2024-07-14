@@ -64,7 +64,7 @@ public class Floor : MonoBehaviour
     {
         TextMeshPro textField = this.GetComponentInChildren<TextMeshPro>();
         textField.text = GetFloorName();
-        Color color = isActivated ? new Color(0, 0, 0) : new Color(0.5f, 0.5f, 0.5f);
+        Color color = isActivated ? new Color(0, 0, 0) : new Color(1f, 1f, 1f);
         textField.color = color;
         textField.outlineColor = color;
     }
@@ -106,7 +106,6 @@ public class Floor : MonoBehaviour
         // 최대 승객 수까지 승객 생성
         if (Passengers.Count < maxCapacityOfPassengers)
         {
-            Debug.Log("WaveType : " + WaveType);
             // 웨이브에 맞게 승객 생성
             switch (this.WaveType)
             {
@@ -123,7 +122,7 @@ public class Floor : MonoBehaviour
                     SpawnOffWorkWave();
                     break;
                 default:
-                    Debug.Log("Floor: Unhandled WaveType! - " + WaveType.ToString());
+                    // Debug.Log("Floor: Unhandled WaveType! - " + WaveType.ToString());
                     break;
             }
         }
