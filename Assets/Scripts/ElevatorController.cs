@@ -108,6 +108,14 @@ public class ElevatorController : MonoBehaviour
             prev = next;
             next = CurrentState;
 
+            if (true) {
+                for (int i = 0; i < ElevatorEndSprites.Count; i++) {
+                    ElevatorSpriteRenderer.sprite = ElevatorEndSprites[i];
+                    yield return new WaitForSeconds(0.1f);
+                }
+                continue;
+            }
+
             if (prev == next) {
                 switch (next) {
                     case ElevatorState.IDLE:
