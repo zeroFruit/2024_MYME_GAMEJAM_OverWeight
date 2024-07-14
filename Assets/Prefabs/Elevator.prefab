@@ -1559,6 +1559,13 @@ MonoBehaviour:
   - {fileID: -6486691005523294710, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
   - {fileID: 960982126980071622, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
   - {fileID: -2557122660403769879, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  ElevatorEndSprites:
+  - {fileID: -6486691005523294710, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: 960982126980071622, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: -2557122660403769879, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: -4123872930214686781, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: -6076541925067082007, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
+  - {fileID: -2151363839880579257, guid: 2f92b47f0a9774821bef937570b59bbd, type: 3}
 --- !u!1 &5051030678460309701
 GameObject:
   m_ObjectHideFlags: 0

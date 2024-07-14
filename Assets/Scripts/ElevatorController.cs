@@ -39,6 +39,7 @@ public class ElevatorController : MonoBehaviour
     public ElevatorDirection CurrentDirection;
     public SpriteRenderer ElevatorSpriteRenderer;
     public List<Sprite> ElevatorSprites;
+    public List<Sprite> ElevatorEndSprites;
 
 
     public void Init(
