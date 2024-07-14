@@ -86,6 +86,16 @@ public class GoldManager : Singleton<GoldManager>, EventListener<ElevatorSettleU
                 CurrentGold
             );
         }
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            CurrentGold -= 1000;
+            GoldChangedEvent.Trigger(
+                0,
+                1000,
+                CurrentGold+1000,
+                CurrentGold
+            );
+        }
     }
 
     void OnEnable()

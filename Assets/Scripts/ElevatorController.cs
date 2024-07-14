@@ -6,11 +6,9 @@ using HAWStudio.Common;
 using SSR.OverWeight;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-public class ElevatorController : MonoBehaviour
+public class ElevatorController : MonoBehaviour, EventListener<GameOverEvent>
 {
     public FeedbackPlayer StopFeedback;
     public int ElevatorIdx;
@@ -40,6 +38,7 @@ public class ElevatorController : MonoBehaviour
     public SpriteRenderer ElevatorSpriteRenderer;
     public List<Sprite> ElevatorSprites;
     public List<Sprite> ElevatorEndSprites;
+    private bool playGameOverAnination = false;
 
 
     public void Init(
@@ -70,6 +69,19 @@ public class ElevatorController : MonoBehaviour
         }
 
         StartCoroutine(ElevatorAnimation());
+    }
+
+    public void OnEvent(GameOverEvent e)
+    {
+        playGameOverAnination = true;
+    }
+
+    void OnEnable() {
+        this.StartListeningEvent<GameOverEvent>();
+    }
+
+    void OnDisable() {
+        this.StopListeningEvent<GameOverEvent>();
     }
 
     public enum ElevatorState
@@ -108,12 +120,13 @@ public class ElevatorController : MonoBehaviour
             prev = next;
             next = CurrentState;
 
-            if (true) {
+            if (playGameOverAnination) {
                 for (int i = 0; i < ElevatorEndSprites.Count; i++) {
                     ElevatorSpriteRenderer.sprite = ElevatorEndSprites[i];
                     yield return new WaitForSeconds(0.1f);
                 }
-                continue;
+                // game over. animatio loop end
+                break;;
             }
 
             if (prev == next) {
