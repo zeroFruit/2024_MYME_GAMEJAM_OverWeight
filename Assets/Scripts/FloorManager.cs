@@ -4,6 +4,7 @@ using System.Linq;
 using SSR.OverWeight;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,8 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     [Header("Spawn")] public float spawnTimer;
     public float spawnDuration;
+
+    public List<float> daySpawnDuration = new List<float>();
     public float spawnMinDuration;
 
     [Header("SpawnProbability")] public int normalSpawnProbability;
@@ -57,6 +60,11 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
                 floor.Actiavte();
             }
         }
+
+        for (int idx = 0; idx < 3; idx++)
+        {
+            daySpawnDuration[idx] = 5 - idx;
+        }
     }
 
     void Update()
@@ -74,7 +82,15 @@ public class FloorManager : Singleton<FloorManager>, EventListener<ElevatorArriv
 
     float GetNowSpawnDuration()
     {
-        return Mathf.Min(spawnDuration - DayManager.Instance.Day, spawnMinDuration);
+        var day = DayManager.Instance.Day;
+        if (day < daySpawnDuration.Count)
+        {
+            return daySpawnDuration[day];
+        }
+        else {
+            // . coby's work
+            return Mathf.Min(spawnDuration - DayManager.Instance.Day, spawnMinDuration);
+        }
     }
 
     private void SpawnPassenger()
