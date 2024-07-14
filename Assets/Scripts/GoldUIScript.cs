@@ -24,7 +24,7 @@ public class GoldUIScript : MonoBehaviour, EventListener<GoldChangedEvent>
         }
         
         // @roy 이거 옮겨야함 ㅋㅋ
-        if (e.To < 0)
+        if (e.To < -500)
         {
             GameOverEvent.Trigger();
         }

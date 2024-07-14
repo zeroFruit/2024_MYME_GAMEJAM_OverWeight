@@ -2794,8 +2794,8 @@ MonoBehaviour:
   spawnTimer: 0
   spawnDuration: 0
   daySpawnDuration:
-  - 3
   - 2
+  - 1.7
   - 1.5
   - 1.2
   - 1
